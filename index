@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>Controle Profissional</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      background: #f4f6f8;
+      color: #202124;
+
+      min-height: 100vh;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      padding: 20px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 480px;
+    }
+
+    .card {
+      background: #ffffff;
+
+      border-radius: 18px;
+
+      padding: 28px;
+
+      box-shadow:
+        0 8px 30px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+
+      margin: 0 auto 18px;
+
+      border-radius: 16px;
+
+      background: #111827;
+      color: #ffffff;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      font-size: 25px;
+      font-weight: bold;
+    }
+
+    h1 {
+      text-align: center;
+
+      font-size: 25px;
+
+      margin-bottom: 8px;
+
+      color: #111827;
+    }
+
+    .subtitle {
+      text-align: center;
+
+      color: #6b7280;
+
+      font-size: 14px;
+
+      margin-bottom: 28px;
+    }
+
+    .campo {
+      margin-bottom: 18px;
+    }
+
+    label {
+      display: block;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      color: #374151;
+
+      margin-bottom: 8px;
+    }
+
+    select,
+    input {
+      width: 100%;
+
+      height: 52px;
+
+      border: 1px solid #d1d5db;
+
+      border-radius: 10px;
+
+      padding: 0 14px;
+
+      font-size: 16px;
+
+      background: #ffffff;
+
+      outline: none;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #111827;
+
+      box-shadow:
+        0 0 0 3px rgba(17, 24, 39, 0.08);
+    }
+
+    button {
+      width: 100%;
+
+      height: 52px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      font-size: 16px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: 0.15s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-principal {
+      background: #111827;
+      color: #ffffff;
+    }
+
+    .btn-principal:hover {
+      background: #1f2937;
+    }
+
+    .btn-secundario {
+      background: #e5e7eb;
+      color: #111827;
+
+      margin-top: 12px;
+    }
+
+    .btn-secundario:hover {
+      background: #d1d5db;
+    }
+
+    .btn-finalizar {
+      background: #fee2e2;
+      color: #991b1b;
+
+      margin-top: 18px;
+    }
+
+    .btn-finalizar:hover {
+      background: #fecaca;
+    }
+
+    .tela {
+      display: none;
+    }
+
+    .tela.ativa {
+      display: block;
+    }
+
+    .status {
+      min-height: 22px;
+
+      text-align: center;
+
+      font-size: 14px;
+
+      margin-top: 12px;
+    }
+
+    .status.sucesso {
+      color: #15803d;
+    }
+
+    .status.erro {
+      color: #b91c1c;
+    }
+
+    .status.carregando {
+      color: #6b7280;
+    }
+
+    .info-conferencia {
+      display: grid;
+
+      grid-template-columns: 1fr 1fr;
+
+      gap: 12px;
+
+      margin-bottom: 24px;
+    }
+
+    .info-box {
+      background: #f3f4f6;
+
+      border-radius: 12px;
+
+      padding: 16px;
+
+      text-align: center;
+    }
+
+    .info-label {
+      display: block;
+
+      color: #6b7280;
+
+      font-size: 12px;
+
+      margin-bottom: 7px;
+    }
+
+    .info-valor {
+      display: block;
+
+      color: #111827;
+
+      font-size: 25px;
+
+      font-weight: bold;
+    }
+
+    .separador-atual {
+      background: #111827;
+
+      color: #ffffff;
+
+      border-radius: 12px;
+
+      padding: 14px;
+
+      text-align: center;
+
+      margin-bottom: 20px;
+
+      font-size: 14px;
+    }
+
+    .separador-atual strong {
+      display: block;
+
+      font-size: 18px;
+
+      margin-top: 4px;
+    }
+
+    .pedido-input {
+      text-align: center;
+
+      font-size: 22px !important;
+
+      font-weight: bold;
+
+      letter-spacing: 1px;
+    }
+
+    .ultimo {
+      margin-top: 18px;
+
+      padding: 14px;
+
+      border-radius: 10px;
+
+      background: #f9fafb;
+
+      border: 1px solid #e5e7eb;
+
+      text-align: center;
+    }
+
+    .ultimo-label {
+      display: block;
+
+      font-size: 12px;
+
+      color: #6b7280;
+
+      margin-bottom: 5px;
+    }
+
+    .ultimo-pedido {
+      font-size: 18px;
+
+      font-weight: bold;
+
+      color: #111827;
+    }
+
+    .rodape {
+      text-align: center;
+
+      margin-top: 18px;
+
+      color: #9ca3af;
+
+      font-size: 12px;
+    }
+
+    .loading {
+      text-align: center;
+
+      padding: 10px 0;
+
+      color: #6b7280;
+
+      font-size: 14px;
+    }
+
+    @media (max-width: 420px) {
+
+      body {
+        padding: 12px;
+      }
+
+      .card {
+        padding: 22px 18px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+
+<body>
+
+  <main class="app">
+
+    <div class="card">
+
+
+      <!-- ================================================= -->
+      <!-- TELA INICIAL -->
+      <!-- ================================================= -->
+
+      <section
+        id="telaInicial"
+        class="tela ativa"
+      >
+
+        <div class="logo">
+          CP
+        </div>
+
+        <h1>
+          Controle Profissional
+        </h1>
+
+        <p class="subtitle">
+          Controle de conferência
+        </p>
+
+
+        <div class="campo">
+
+          <label for="separador">
+            Separador
+          </label>
+
+          <select id="separador">
+
+            <option value="">
+              Carregando separadores...
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <button
+          id="btnIniciar"
+          class="btn-principal"
+          type="button"
+        >
+          Iniciar conferência
+        </button>
+
+
+        <div
+          id="statusInicial"
+          class="status"
+        ></div>
+
+      </section>
+
+
+
+      <!-- ================================================= -->
+      <!-- TELA DE CONFERÊNCIA -->
+      <!-- ================================================= -->
+
+      <section
+        id="telaConferencia"
+        class="tela"
+      >
+
+        <div class="logo">
+          CP
+        </div>
+
+        <h1>
+          Conferência
+        </h1>
+
+
+        <div class="separador-atual">
+
+          Separador
+
+          <strong id="separadorAtual">
+            -
+          </strong>
+
+        </div>
+
+
+        <div class="info-conferencia">
+
+          <div class="info-box">
+
+            <span class="info-label">
+              Pedidos hoje
+            </span>
+
+            <span
+              id="contador"
+              class="info-valor"
+            >
+              0
+            </span>
+
+          </div>
+
+
+          <div class="info-box">
+
+            <span class="info-label">
+              Turno
+            </span>
+
+            <span
+              id="turnoAtual"
+              class="info-valor"
+            >
+              -
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div class="campo">
+
+          <label for="pedido">
+            Pedido
+          </label>
+
+          <input
+            id="pedido"
+            class="pedido-input"
+            type="text"
+            inputmode="numeric"
+            autocomplete="off"
+            placeholder="Bipe ou digite o pedido"
+          >
+
+        </div>
+
+
+        <button
+          id="btnRegistrar"
+          class="btn-principal"
+          type="button"
+        >
+          Registrar pedido
+        </button>
+
+
+        <div
+          id="statusConferencia"
+          class="status"
+        ></div>
+
+
+        <div class="ultimo">
+
+          <span class="ultimo-label">
+            Último pedido registrado
+          </span>
+
+          <span
+            id="ultimoPedido"
+            class="ultimo-pedido"
+          >
+            Nenhum ainda
+          </span>
+
+        </div>
+
+
+        <button
+          id="btnFinalizar"
+          class="btn-finalizar"
+          type="button"
+        >
+          Finalizar conferência
+        </button>
+
+      </section>
+
+
+      <div class="rodape">
+        Controle Profissional
+      </div>
+
+    </div>
+
+  </main>
+
+
+
+  <script>
+
+    /*
+     * ====================================================
+     * CONFIGURAÇÃO
+     * ====================================================
+     */
+
+
+    const URL_API =
+      'https://script.google.com/macros/s/AKfycbyzAQ1ov6pG_vs9WADubcDKU9t4ZofCA5KzMqVz4KgjEI3c_B1stR_1cn5OXwRty8Cx/exec';
+
+
+    const CHAVE_APP =
+      'KING-CONFERENCIA-2026';
+
+
+
+    /*
+     * ====================================================
+     * ELEMENTOS
+     * ====================================================
+     */
+
+
+    const telaInicial =
+      document.getElementById(
+        'telaInicial'
+      );
+
+
+    const telaConferencia =
+      document.getElementById(
+        'telaConferencia'
+      );
+
+
+    const separador =
+      document.getElementById(
+        'separador'
+      );
+
+
+    const pedido =
+      document.getElementById(
+        'pedido'
+      );
+
+
+    const btnIniciar =
+      document.getElementById(
+        'btnIniciar'
+      );
+
+
+    const btnRegistrar =
+      document.getElementById(
+        'btnRegistrar'
+      );
+
+
+    const btnFinalizar =
+      document.getElementById(
+        'btnFinalizar'
+      );
+
+
+    const statusInicial =
+      document.getElementById(
+        'statusInicial'
+      );
+
+
+    const statusConferencia =
+      document.getElementById(
+        'statusConferencia'
+      );
+
+
+    const contador =
+      document.getElementById(
+        'contador'
+      );
+
+
+    const ultimoPedido =
+      document.getElementById(
+        'ultimoPedido'
+      );
+
+
+    const separadorAtual =
+      document.getElementById(
+        'separadorAtual'
+      );
+
+
+    const turnoAtual =
+      document.getElementById(
+        'turnoAtual'
+      );
+
+
+
+    /*
+     * ====================================================
+     * VARIÁVEIS
+     * ====================================================
+     */
+
+
+    let separadorSelecionado =
+      '';
+
+
+    let enviando =
+      false;
+
+
+
+    /*
+     * ====================================================
+     * INICIALIZAÇÃO
+     * ====================================================
+     */
+
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      function() {
+
+        carregarSeparadores();
+
+      }
+    );
+
+
+
+    /*
+     * ====================================================
+     * CARREGAR SEPARADORES
+     * ====================================================
+     */
+
+
+    function carregarSeparadores() {
+
+      mostrarStatus(
+        statusInicial,
+        'Carregando separadores...',
+        'carregando'
+      );
+
+
+      const callback =
+        criarCallback(
+          function(resposta) {
+
+            if (
+              !resposta ||
+              resposta.sucesso !== true
+            ) {
+
+              mostrarStatus(
+                statusInicial,
+                resposta &&
+                resposta.erro
+                  ? resposta.erro
+                  : 'Não foi possível carregar os separadores.',
+                'erro'
+              );
+
+              separador.innerHTML =
+                '<option value="">Erro ao carregar</option>';
+
+              return;
+            }
+
+
+            const lista =
+              Array.isArray(
+                resposta.separadores
+              )
+                ? resposta.separadores
+                : [];
+
+
+            separador.innerHTML =
+              '';
+
+
+            if (
+              lista.length === 0
+            ) {
+
+              const option =
+                document.createElement(
+                  'option'
+                );
+
+              option.value =
+                '';
+
+              option.textContent =
+                'Nenhum separador cadastrado';
+
+              separador.appendChild(
+                option
+              );
+
+              mostrarStatus(
+                statusInicial,
+                'Nenhum separador encontrado no Cadastro.',
+                'erro'
+              );
+
+              return;
+            }
+
+
+            const primeiraOpcao =
+              document.createElement(
+                'option'
+              );
+
+            primeiraOpcao.value =
+              '';
+
+            primeiraOpcao.textContent =
+              'Selecione o separador';
+
+            separador.appendChild(
+              primeiraOpcao
+            );
+
+
+            lista.forEach(
+              function(nome) {
+
+                const option =
+                  document.createElement(
+                    'option'
+                  );
+
+                option.value =
+                  nome;
+
+                option.textContent =
+                  nome;
+
+                separador.appendChild(
+                  option
+                );
+
+              }
+            );
+
+
+            mostrarStatus(
+              statusInicial,
+              '',
+              ''
+            );
+
+          }
+        );
+
+
+      const url =
+        URL_API +
+        '?acao=separadores' +
+        '&chave=' +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        '&callback=' +
+        encodeURIComponent(
+          callback
+        );
+
+
+      carregarJSONP(
+        url,
+        callback
+      );
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * INICIAR CONFERÊNCIA
+     * ====================================================
+     */
+
+
+    btnIniciar.addEventListener(
+      'click',
+      function() {
+
+        const nome =
+          separador.value.trim();
+
+
+        if (!nome) {
+
+          mostrarStatus(
+            statusInicial,
+            'Selecione um separador para continuar.',
+            'erro'
+          );
+
+          separador.focus();
+
+          return;
+        }
+
+
+        separadorSelecionado =
+          nome;
+
+
+        separadorAtual.textContent =
+          separadorSelecionado;
+
+
+        telaInicial.classList.remove(
+          'ativa'
+        );
+
+
+        telaConferencia.classList.add(
+          'ativa'
+        );
+
+
+        atualizarTurnoVisual();
+
+
+        carregarQuantidade();
+
+
+        setTimeout(
+          function() {
+
+            pedido.focus();
+
+          },
+          150
+        );
+
+      }
+    );
+
+
+
+    /*
+     * ====================================================
+     * REGISTRAR PEDIDO
+     * ====================================================
+     */
+
+
+    btnRegistrar.addEventListener(
+      'click',
+      registrarPedido
+    );
+
+
+    pedido.addEventListener(
+      'keydown',
+      function(event) {
+
+        if (
+          event.key === 'Enter'
+        ) {
+
+          event.preventDefault();
+
+          registrarPedido();
+
+        }
+
+      }
+    );
+
+
+
+    function registrarPedido() {
+
+      if (enviando) {
+        return;
+      }
+
+
+      const numeroPedido =
+        pedido.value.trim();
+
+
+      if (!numeroPedido) {
+
+        mostrarStatus(
+          statusConferencia,
+          'Informe ou bipe o número do pedido.',
+          'erro'
+        );
+
+        pedido.focus();
+
+        return;
+      }
+
+
+      if (!separadorSelecionado) {
+
+        mostrarStatus(
+          statusConferencia,
+          'Nenhum separador selecionado.',
+          'erro'
+        );
+
+        voltarParaInicio();
+
+        return;
+      }
+
+
+      enviando =
+        true;
+
+
+      btnRegistrar.disabled =
+        true;
+
+
+      btnRegistrar.textContent =
+        'Registrando...';
+
+
+      mostrarStatus(
+        statusConferencia,
+        'Registrando pedido...',
+        'carregando'
+      );
+
+
+      const callback =
+        criarCallback(
+          function(resposta) {
+
+            enviando =
+              false;
+
+
+            btnRegistrar.disabled =
+              false;
+
+
+            btnRegistrar.textContent =
+              'Registrar pedido';
+
+
+            if (
+              !resposta ||
+              resposta.sucesso !== true
+            ) {
+
+              mostrarStatus(
+                statusConferencia,
+                resposta &&
+                resposta.erro
+                  ? resposta.erro
+                  : 'Não foi possível registrar o pedido.',
+                'erro'
+              );
+
+              pedido.focus();
+
+              return;
+            }
+
+
+            ultimoPedido.textContent =
+              resposta.pedido ||
+              numeroPedido;
+
+
+            pedido.value =
+              '';
+
+
+            mostrarStatus(
+              statusConferencia,
+              'Pedido registrado com sucesso.',
+              'sucesso'
+            );
+
+
+            if (
+              resposta.turno
+            ) {
+
+              turnoAtual.textContent =
+                resposta.turno;
+
+            }
+            else {
+
+              atualizarTurnoVisual();
+
+            }
+
+
+            carregarQuantidade();
+
+
+            pedido.focus();
+
+          }
+        );
+
+
+      const url =
+        URL_API +
+        '?acao=registrar' +
+        '&chave=' +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        '&pedido=' +
+        encodeURIComponent(
+          numeroPedido
+        ) +
+        '&separador=' +
+        encodeURIComponent(
+          separadorSelecionado
+        ) +
+        '&callback=' +
+        encodeURIComponent(
+          callback
+        );
+
+
+      carregarJSONP(
+        url,
+        callback
+      );
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * CARREGAR QUANTIDADE
+     * ====================================================
+     */
+
+
+    function carregarQuantidade() {
+
+      if (
+        !separadorSelecionado
+      ) {
+        return;
+      }
+
+
+      const callback =
+        criarCallback(
+          function(resposta) {
+
+            if (
+              resposta &&
+              resposta.sucesso === true
+            ) {
+
+              contador.textContent =
+                resposta.quantidade || 0;
+
+            }
+
+          }
+        );
+
+
+      const url =
+        URL_API +
+        '?acao=quantidade' +
+        '&chave=' +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        '&separador=' +
+        encodeURIComponent(
+          separadorSelecionado
+        ) +
+        '&callback=' +
+        encodeURIComponent(
+          callback
+        );
+
+
+      carregarJSONP(
+        url,
+        callback
+      );
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * TURNO VISUAL
+     * ====================================================
+     *
+     * Até 12:00 = Manhã
+     * Após 12:00 = Tarde
+     *
+     * O registro oficial é definido
+     * pelo servidor Apps Script.
+     *
+     */
+
+
+    function atualizarTurnoVisual() {
+
+      const agora =
+        new Date();
+
+
+      const hora =
+        agora.getHours();
+
+
+      const minuto =
+        agora.getMinutes();
+
+
+      const minutos =
+        (hora * 60) +
+        minuto;
+
+
+      turnoAtual.textContent =
+        minutos <= 720
+          ? 'Manhã'
+          : 'Tarde';
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * FINALIZAR
+     * ====================================================
+     */
+
+
+    btnFinalizar.addEventListener(
+      'click',
+      function() {
+
+        const confirmar =
+          window.confirm(
+            'Deseja finalizar esta conferência?'
+          );
+
+
+        if (!confirmar) {
+          return;
+        }
+
+
+        voltarParaInicio();
+
+      }
+    );
+
+
+
+    function voltarParaInicio() {
+
+      separadorSelecionado =
+        '';
+
+
+      pedido.value =
+        '';
+
+
+      contador.textContent =
+        '0';
+
+
+      ultimoPedido.textContent =
+        'Nenhum ainda';
+
+
+      turnoAtual.textContent =
+        '-';
+
+
+      separadorAtual.textContent =
+        '-';
+
+
+      mostrarStatus(
+        statusConferencia,
+        '',
+        ''
+      );
+
+
+      telaConferencia.classList.remove(
+        'ativa'
+      );
+
+
+      telaInicial.classList.add(
+        'ativa'
+      );
+
+
+      separador.value =
+        '';
+
+
+      setTimeout(
+        function() {
+
+          separador.focus();
+
+        },
+        100
+      );
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * STATUS
+     * ====================================================
+     */
+
+
+    function mostrarStatus(
+      elemento,
+      mensagem,
+      tipo
+    ) {
+
+      elemento.textContent =
+        mensagem || '';
+
+
+      elemento.className =
+        'status';
+
+
+      if (tipo) {
+
+        elemento.classList.add(
+          tipo
+        );
+
+      }
+
+    }
+
+
+
+    /*
+     * ====================================================
+     * JSONP
+     * ====================================================
+     *
+     * O GitHub Pages e o Apps Script
+     * estão em domínios diferentes.
+     *
+     * Por isso usamos JSONP.
+     *
+     */
+
+
+    function criarCallback(
+      funcao
+    ) {
+
+      const nome =
+        'callback_' +
+        Date.now() +
+        '_' +
+        Math.floor(
+          Math.random() * 100000
+        );
+
+
+      window[nome] =
+        function(dados) {
+
+          try {
+
+            funcao(dados);
+
+          }
+          finally {
+
+            try {
+
+              delete window[nome];
+
+            }
+            catch (erro) {
+
+              window[nome] =
+                undefined;
+
+            }
+
+          }
+
+        };
+
+
+      return nome;
+
+    }
+
+
+
+    function carregarJSONP(
+      url,
+      callback
+    ) {
+
+      const script =
+        document.createElement(
+          'script'
+        );
+
+
+      script.src =
+        url;
+
+
+      script.async =
+        true;
+
+
+      let finalizado =
+        false;
+
+
+      const timeout =
+        setTimeout(
+          function() {
+
+            if (
+              finalizado
+            ) {
+              return;
+            }
+
+
+            finalizado =
+              true;
+
+
+            script.remove();
+
+
+            if (
+              typeof window[
+                callback
+              ] === 'function'
+            ) {
+
+              window[
+                callback
+              ]({
+
+                sucesso: false,
+
+                erro:
+                  'Tempo limite excedido ao comunicar com o servidor.'
+
+              });
+
+            }
+
+          },
+          15000
+        );
+
+
+      script.onerror =
+        function() {
+
+          if (
+            finalizado
+          ) {
+            return;
+          }
+
+
+          finalizado =
+            true;
+
+
+          clearTimeout(
+            timeout
+          );
+
+
+          script.remove();
+
+
+          if (
+            typeof window[
+              callback
+            ] === 'function'
+          ) {
+
+            window[
+              callback
+            ]({
+
+              sucesso: false,
+
+              erro:
+                'Erro de comunicação com o servidor.'
+
+            });
+
+          }
+
+        };
+
+
+      document.body.appendChild(
+        script
+      );
+
+    }
+
+  </script>
+
+</body>
+</html>
