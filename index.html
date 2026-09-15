@@ -1,1408 +1,1540 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Controle Profissional</title>
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  >
+
+  <title>King - Conferência</title>
+
+  <!-- Leitor de código de barras -->
+  <script src="https://unpkg.com/html5-qrcode"></script>
 
   <style>
+
     * {
       box-sizing: border-box;
     }
 
-    html,
     body {
       margin: 0;
       padding: 0;
-      min-height: 100%;
-    }
-
-    body {
+      background: #f2f4f7;
       font-family: Arial, Helvetica, sans-serif;
-      background: #f3f4f6;
-      color: #111827;
+      color: #222;
     }
 
-    .app {
+    .container {
       width: 100%;
-      min-height: 100vh;
-    }
-
-    /* CABEÇALHO */
-
-    .topbar {
-      background: #111827;
-      color: white;
-      padding: 22px 20px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
-    }
-
-    .topbar-content {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-
-    .logo {
-      width: 46px;
-      height: 46px;
-      border-radius: 12px;
-      background: white;
-      color: #111827;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 18px;
-      font-weight: 800;
-      flex-shrink: 0;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: 22px;
-      line-height: 1.2;
-    }
-
-    .brand p {
-      margin: 4px 0 0;
-      font-size: 13px;
-      color: #d1d5db;
-    }
-
-    /* CONTEÚDO */
-
-    .content {
-      width: 100%;
-      max-width: 900px;
-      margin: 0 auto;
-      padding: 24px 20px 40px;
+      max-width: 500px;
+      margin: auto;
+      padding: 15px;
     }
 
     .card {
-      background: white;
-      border-radius: 16px;
-      padding: 22px;
-      margin-bottom: 18px;
-      box-shadow: 0 3px 14px rgba(0, 0, 0, 0.06);
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.12);
     }
 
-    .card-title {
-      margin: 0 0 18px;
-      font-size: 18px;
-      font-weight: 700;
+    .logo {
+      text-align: center;
+      font-size: 28px;
+      font-weight: bold;
+      color: #111;
     }
 
-    /* FORMULÁRIO */
-
-    .field {
-      margin-bottom: 16px;
-    }
-
-    .field:last-child {
-      margin-bottom: 0;
+    .subtitulo {
+      text-align: center;
+      color: #666;
+      margin-top: 4px;
+      margin-bottom: 20px;
     }
 
     label {
       display: block;
+      font-weight: bold;
       margin-bottom: 7px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #374151;
     }
 
-    select,
-    input {
+    select {
       width: 100%;
-      height: 50px;
-      border: 1px solid #d1d5db;
+      padding: 15px;
+      font-size: 18px;
+      border: 1px solid #ccc;
       border-radius: 10px;
       background: white;
-      color: #111827;
-      padding: 0 14px;
-      font-size: 16px;
-      outline: none;
     }
 
-    select:focus,
-    input:focus {
-      border-color: #111827;
-      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
-    }
-
-    input::placeholder {
-      color: #9ca3af;
-    }
-
-    /* BOTÕES */
-
-    .button {
+    button {
       width: 100%;
-      height: 50px;
+      padding: 16px;
       border: 0;
       border-radius: 10px;
-      font-size: 15px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: 15px;
       cursor: pointer;
-      transition: opacity 0.15s, transform 0.1s;
     }
 
-    .button:active {
-      transform: scale(0.99);
-    }
-
-    .button:disabled {
-      opacity: 0.5;
+    button:disabled {
+      opacity: .55;
       cursor: not-allowed;
-      transform: none;
     }
 
-    .button-primary {
-      background: #111827;
+    .btn-iniciar {
+      background: #1976d2;
       color: white;
     }
 
-    .button-secondary {
-      background: #e5e7eb;
-      color: #111827;
+    .btn-parar {
+      background: #c62828;
+      color: white;
     }
 
-    .button-danger {
-      background: #f3f4f6;
-      color: #374151;
-      border: 1px solid #d1d5db;
+    .contador {
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 15px 0;
     }
 
-    .buttons {
-      display: flex;
-      gap: 10px;
-      margin-top: 18px;
+    .numero {
+      color: #1976d2;
+      font-size: 30px;
     }
 
-    /* STATUS */
+    #reader {
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+      margin-top: 10px;
+      min-height: 100px;
+    }
+
+    #reader video {
+      border-radius: 12px;
+    }
+
+    .instrucao {
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      margin: 10px 0;
+    }
 
     .status {
-      display: none;
-      margin-top: 14px;
-      padding: 12px 14px;
-      border-radius: 10px;
-      font-size: 14px;
-      line-height: 1.4;
-    }
-
-    .status.show {
-      display: block;
-    }
-
-    .status.loading {
-      background: #eff6ff;
-      color: #1d4ed8;
-    }
-
-    .status.success {
-      background: #ecfdf5;
-      color: #047857;
-    }
-
-    .status.error {
-      background: #fef2f2;
-      color: #b91c1c;
-    }
-
-    /* PAINEL DA CONFERÊNCIA */
-
-    .conference-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 18px;
-    }
-
-    .conference-header h2 {
-      margin: 0;
-      font-size: 19px;
-    }
-
-    .active-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: #ecfdf5;
-      color: #047857;
-      font-size: 12px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .active-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #10b981;
-    }
-
-    /* INFORMAÇÕES */
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 22px;
-    }
-
-    .info-box {
-      background: #f9fafb;
-      border-radius: 12px;
       padding: 15px;
-      min-width: 0;
+      margin-top: 15px;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: bold;
+      font-size: 17px;
     }
 
-    .info-label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 6px;
+    .sucesso {
+      background: #e8f5e9;
+      color: #2e7d32;
     }
 
-    .info-value {
-      font-size: 18px;
-      font-weight: 700;
-      color: #111827;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+    .erro {
+      background: #ffebee;
+      color: #c62828;
     }
 
-    /* PEDIDO */
+    .ultimo {
+      margin-top: 15px;
+      padding: 15px;
+      border-radius: 10px;
+      background: #f1f8ff;
+      text-align: center;
+    }
 
-    .pedido-label {
+    .ultimo-label {
+      color: #666;
       font-size: 14px;
-      font-weight: 700;
-      color: #374151;
-      margin-bottom: 8px;
     }
 
-    #pedido {
-      height: 58px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
+    .ultimo-pedido {
+      color: #1976d2;
+      font-size: 32px;
+      font-weight: bold;
+      margin-top: 5px;
     }
 
-    .pedido-help {
-      margin-top: 7px;
-      font-size: 12px;
-      color: #6b7280;
-      text-align: center;
+    /* =========================
+       CONFIRMAÇÃO DO PEDIDO
+       ========================= */
+
+    .confirmacao {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.60);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 9999;
     }
 
-    .registrar {
-      margin-top: 12px;
-    }
-
-    .finalizar {
-      margin-top: 10px;
-    }
-
-    /* ÚLTIMO PEDIDO */
-
-    .last-order {
-      margin-top: 18px;
-      padding: 16px;
-      background: #f9fafb;
-      border-radius: 12px;
+    .confirmacao-card {
+      width: 100%;
+      max-width: 390px;
+      background: white;
+      border-radius: 18px;
+      padding: 25px;
+      box-shadow: 0 8px 30px rgba(0,0,0,.30);
       text-align: center;
     }
 
-    .last-order-label {
-      font-size: 12px;
-      color: #6b7280;
+    .confirmacao-titulo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .confirmacao-texto {
+      color: #666;
+      font-size: 16px;
       margin-bottom: 5px;
     }
 
-    .last-order-value {
-      font-size: 25px;
-      font-weight: 800;
+    .pedido-confirmacao {
+      color: #1976d2;
+      font-size: 36px;
+      font-weight: bold;
+      margin: 10px 0 22px;
+      word-break: break-all;
     }
 
-    /* OCULTO */
+    .botoes-confirmacao {
+      display: flex;
+      gap: 10px;
+    }
 
-    .hidden {
+    .botoes-confirmacao button {
+      width: 50%;
+      margin-top: 0;
+    }
+
+    .btn-sim {
+      background: #2e7d32;
+      color: white;
+    }
+
+    .btn-nao {
+      background: #c62828;
+      color: white;
+    }
+
+    .oculto {
       display: none !important;
     }
 
-    /* RODAPÉ */
-
-    .footer {
-      text-align: center;
-      padding: 0 20px 25px;
-      color: #9ca3af;
-      font-size: 12px;
-    }
-
-    /* MOBILE */
-
-    @media (max-width: 650px) {
-
-      .topbar {
-        padding: 18px 15px;
-      }
-
-      .content {
-        padding: 18px 15px 30px;
-      }
-
-      .card {
-        padding: 18px;
-        border-radius: 14px;
-      }
-
-      .info-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .conference-header {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .buttons {
-        flex-direction: column;
-      }
-    }
-
-    @media (max-width: 380px) {
-
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .brand h1 {
-        font-size: 19px;
-      }
-
-      .card-title {
-        font-size: 17px;
-      }
-    }
   </style>
+
 </head>
+
 
 <body>
 
-<div class="app">
+<div class="container">
 
-  <!-- CABEÇALHO -->
+  <div class="card">
 
-  <header class="topbar">
-    <div class="topbar-content">
-
-      <div class="logo">
-        CP
-      </div>
-
-      <div class="brand">
-        <h1>Controle Profissional</h1>
-        <p>Controle de conferência</p>
-      </div>
-
+    <div class="logo">
+      KING
     </div>
-  </header>
+
+    <div class="subtitulo">
+      Controle de Conferência
+    </div>
 
 
-  <!-- CONTEÚDO -->
+    <!-- ========================= -->
+    <!-- TELA INICIAL              -->
+    <!-- ========================= -->
 
-  <main class="content">
+    <div id="telaInicial">
 
-    <!-- SELEÇÃO DO SEPARADOR -->
+      <label for="separador">
+        Separador
+      </label>
 
-    <section class="card">
+      <select id="separador">
 
-      <h2 class="card-title">
-        Iniciar conferência
-      </h2>
+        <option value="">
+          Carregando...
+        </option>
 
-      <div class="field">
+      </select>
 
-        <label for="separador">
-          Separador
-        </label>
-
-        <select
-          id="separador"
-          disabled
-        >
-          <option value="">
-            Carregando separadores...
-          </option>
-        </select>
-
-      </div>
 
       <button
-        id="btnIniciar"
-        class="button button-primary"
-        type="button"
-        disabled
+        class="btn-iniciar"
+        onclick="iniciarConferencia()"
       >
-        Iniciar conferência
+        INICIAR CONFERÊNCIA
       </button>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- TELA DE CONFERÊNCIA       -->
+    <!-- ========================= -->
+
+    <div
+      id="telaConferencia"
+      class="oculto"
+    >
+
+      <div class="contador">
+
+        Pedidos hoje:
+
+        <span
+          id="contador"
+          class="numero"
+        >
+          0
+        </span>
+
+      </div>
+
+
+      <!-- CÂMERA -->
+
+      <div id="reader"></div>
+
+
+      <div class="instrucao">
+
+        Aponte a câmera para o código
+        de barras do pedido.
+
+        <br><br>
+
+        Após a leitura, confirme o número.
+
+      </div>
+
+
+      <!-- STATUS -->
 
       <div
         id="status"
-        class="status"
+        class="status oculto"
       ></div>
-
-    </section>
-
-
-    <!-- ÁREA DA CONFERÊNCIA -->
-
-    <section
-      id="areaConferencia"
-      class="card hidden"
-    >
-
-      <div class="conference-header">
-
-        <h2>
-          Conferência em andamento
-        </h2>
-
-        <div class="active-badge">
-          <span class="active-dot"></span>
-          Ativa
-        </div>
-
-      </div>
-
-
-      <!-- INFORMAÇÕES -->
-
-      <div class="info-grid">
-
-        <div class="info-box">
-
-          <div class="info-label">
-            Separador
-          </div>
-
-          <div
-            id="separadorAtual"
-            class="info-value"
-          >
-            -
-          </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-          <div class="info-label">
-            Turno
-          </div>
-
-          <div
-            id="turnoAtual"
-            class="info-value"
-          >
-            -
-          </div>
-
-        </div>
-
-
-        <div class="info-box">
-
-          <div class="info-label">
-            Pedidos hoje
-          </div>
-
-          <div
-            id="quantidadeHoje"
-            class="info-value"
-          >
-            0
-          </div>
-
-        </div>
-
-      </div>
-
-
-      <!-- PEDIDO -->
-
-      <div>
-
-        <div class="pedido-label">
-          Número do pedido
-        </div>
-
-        <input
-          id="pedido"
-          type="text"
-          inputmode="numeric"
-          autocomplete="off"
-          placeholder="Bipe ou digite o pedido"
-          disabled
-        >
-
-        <div class="pedido-help">
-          Pressione Enter para registrar
-        </div>
-
-        <button
-          id="btnRegistrar"
-          class="button button-primary registrar"
-          type="button"
-          disabled
-        >
-          Registrar pedido
-        </button>
-
-      </div>
 
 
       <!-- ÚLTIMO PEDIDO -->
 
-      <div class="last-order">
+      <div
+        id="ultimo"
+        class="ultimo oculto"
+      >
 
-        <div class="last-order-label">
+        <div class="ultimo-label">
           Último pedido registrado
         </div>
 
         <div
           id="ultimoPedido"
-          class="last-order-value"
+          class="ultimo-pedido"
         >
-          -
         </div>
 
       </div>
 
 
-      <!-- FINALIZAR -->
-
       <button
-        id="btnFinalizar"
-        class="button button-secondary finalizar"
-        type="button"
+        class="btn-parar"
+        onclick="finalizarConferencia()"
       >
-        Finalizar conferência
+        FINALIZAR CONFERÊNCIA
       </button>
 
-    </section>
+    </div>
 
-  </main>
+  </div>
+
+</div>
 
 
-  <footer class="footer">
-    Controle Profissional
-  </footer>
+<!-- ========================= -->
+<!-- CONFIRMAÇÃO DO PEDIDO     -->
+<!-- ========================= -->
+
+<div
+  id="confirmacao"
+  class="confirmacao oculto"
+>
+
+  <div class="confirmacao-card">
+
+    <div class="confirmacao-titulo">
+      Confirmar pedido?
+    </div>
+
+    <div class="confirmacao-texto">
+      A câmera leu o seguinte número:
+    </div>
+
+    <div
+      id="pedidoConfirmacao"
+      class="pedido-confirmacao"
+    >
+    </div>
+
+    <div class="botoes-confirmacao">
+
+      <button
+        id="btnNao"
+        class="btn-nao"
+        onclick="recusarPedido()"
+      >
+        NÃO
+      </button>
+
+      <button
+        id="btnSim"
+        class="btn-sim"
+        onclick="confirmarPedido()"
+      >
+        SIM
+      </button>
+
+    </div>
+
+  </div>
 
 </div>
 
 
 <script>
 
-  /*
-   * ==========================================================
-   * CONFIGURAÇÃO DA API
-   * ==========================================================
-   */
 
-  const API =
-    "https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec";
+/* =====================================================
+   CONFIGURAÇÃO
+   ===================================================== */
 
-  const CHAVE =
-    "KING-CONFERENCIA-2026";
+const URL_API =
+  'https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec';
 
 
-  /*
-   * ==========================================================
-   * ELEMENTOS DA PÁGINA
-   * ==========================================================
-   */
-
-  const separador =
-    document.getElementById("separador");
-
-  const btnIniciar =
-    document.getElementById("btnIniciar");
-
-  const areaConferencia =
-    document.getElementById("areaConferencia");
-
-  const separadorAtual =
-    document.getElementById("separadorAtual");
-
-  const turnoAtual =
-    document.getElementById("turnoAtual");
-
-  const quantidadeHoje =
-    document.getElementById("quantidadeHoje");
-
-  const ultimoPedido =
-    document.getElementById("ultimoPedido");
-
-  const pedido =
-    document.getElementById("pedido");
-
-  const btnRegistrar =
-    document.getElementById("btnRegistrar");
-
-  const btnFinalizar =
-    document.getElementById("btnFinalizar");
-
-  const status =
-    document.getElementById("status");
+const CHAVE =
+  'KING-CONFERENCIA-2026';
 
 
-  /*
-   * ==========================================================
-   * ESTADO DO SISTEMA
-   * ==========================================================
-   */
+/* =====================================================
+   VARIÁVEIS
+   ===================================================== */
 
-  let conferenciaAtiva = false;
+let separador = '';
 
+let scanner = null;
 
-  /*
-   * ==========================================================
-   * MENSAGENS DE STATUS
-   * ==========================================================
-   */
+let processando = false;
 
-  function mostrarStatus(
-    mensagem,
-    tipo
-  ) {
+let pedidoPendente = '';
 
-    status.textContent = mensagem;
+let ultimoCodigo = '';
 
-    status.className =
-      "status show " + tipo;
-
-  }
+let ultimoMomento = 0;
 
 
-  function esconderStatus() {
+/* =====================================================
+   CONTADOR LOCAL
+   ===================================================== */
 
-    status.textContent = "";
+function chaveContador() {
 
-    status.className =
-      "status";
+  const hoje =
+    new Date()
+      .toISOString()
+      .substring(0, 10);
 
-  }
+  return (
+    'contador_' +
+    hoje +
+    '_' +
+    separador
+  );
 
-
-  /*
-   * ==========================================================
-   * CHAMADA JSONP
-   *
-   * A API está no Google Apps Script e o site no GitHub Pages.
-   * O JSONP permite essa comunicação entre os dois.
-   * ==========================================================
-   */
-
-  function chamarAPI(
-    parametros,
-    callback
-  ) {
-
-    const nomeCallback =
-      "controleProfissional_" +
-      Date.now() +
-      "_" +
-      Math.floor(
-        Math.random() * 100000
-      );
+}
 
 
-    let script = null;
+function obterContadorLocal() {
+
+  return parseInt(
+    localStorage.getItem(
+      chaveContador()
+    ) || '0',
+    10
+  );
+
+}
 
 
-    window[nomeCallback] =
-      function(resposta) {
+function salvarContadorLocal(valor) {
 
-        try {
+  localStorage.setItem(
+    chaveContador(),
+    String(valor)
+  );
 
-          callback(resposta);
-
-        } finally {
-
-          delete window[nomeCallback];
-
-          if (
-            script &&
-            script.parentNode
-          ) {
-
-            script.parentNode.removeChild(
-              script
-            );
-
-          }
-
-        }
-
-      };
+}
 
 
-    const query =
-      new URLSearchParams();
+function atualizarTelaContador() {
+
+  document
+    .getElementById('contador')
+    .textContent =
+    obterContadorLocal();
+
+}
 
 
-    Object.keys(parametros)
-      .forEach(
-        function(chave) {
+/* =====================================================
+   CARREGAR SEPARADORES
+   ===================================================== */
 
-          query.append(
-            chave,
-            parametros[chave]
-          );
+function carregarSeparadores() {
 
-        }
-      );
+  const callback =
+    'callbackSeparadores_' +
+    Date.now();
 
 
-    query.append(
-      "callback",
-      nomeCallback
-    );
+  window[callback] =
+    function(dados) {
 
-
-    script =
-      document.createElement("script");
-
-
-    script.src =
-      API +
-      "?" +
-      query.toString();
-
-
-    script.async = true;
-
-
-    script.onerror =
-      function() {
-
-        delete window[nomeCallback];
+      try {
 
         if (
-          script &&
-          script.parentNode
+          !dados ||
+          !dados.sucesso
         ) {
 
-          script.parentNode.removeChild(
-            script
+          throw new Error(
+            dados &&
+            dados.erro
+              ? dados.erro
+              : 'Erro ao carregar os separadores.'
           );
 
         }
 
-        callback({
-          sucesso: false,
-          erro:
-            "Não foi possível conectar ao sistema."
-        });
 
-      };
+        const select =
+          document.getElementById(
+            'separador'
+          );
 
 
-    document.body.appendChild(
-      script
-    );
-
-  }
+        select.innerHTML =
+          '<option value="">Selecione seu nome</option>';
 
 
-  /*
-   * ==========================================================
-   * CARREGAR SEPARADORES
-   * ==========================================================
-   */
+        (dados.separadores || [])
+          .forEach(
+            function(nome) {
 
-  function carregarSeparadores() {
+              const option =
+                document.createElement(
+                  'option'
+                );
 
-    separador.disabled = true;
+              option.value =
+                nome;
 
-    btnIniciar.disabled = true;
+              option.textContent =
+                nome;
 
-    separador.innerHTML =
-      "<option value=''>Carregando separadores...</option>";
+              select.appendChild(
+                option
+              );
 
-
-    mostrarStatus(
-      "Carregando separadores...",
-      "loading"
-    );
-
-
-    chamarAPI(
-      {
-        acao: "separadores",
-        chave: CHAVE
-      },
-
-      function(resposta) {
-
-        console.log(
-          "Separadores:",
-          resposta
-        );
+            }
+          );
 
 
         if (
-          !resposta ||
-          resposta.sucesso !== true
+          !dados.separadores ||
+          dados.separadores.length === 0
         ) {
 
-          separador.innerHTML =
-            "<option value=''>Erro ao carregar</option>";
-
           mostrarStatus(
-            resposta &&
-            resposta.erro
-              ? resposta.erro
-              : "Erro ao carregar os separadores.",
-            "error"
+            'Nenhum separador foi encontrado na aba Cadastro.',
+            true
           );
-
-          return;
 
         }
 
-
-        const lista =
-          Array.isArray(
-            resposta.separadores
-          )
-            ? resposta.separadores
-            : [];
-
-
-        separador.innerHTML = "";
-
-
-        const primeiraOpcao =
-          document.createElement("option");
-
-        primeiraOpcao.value = "";
-
-        primeiraOpcao.textContent =
-          "Selecione o separador";
-
-        separador.appendChild(
-          primeiraOpcao
-        );
-
-
-        lista.forEach(
-          function(nome) {
-
-            const option =
-              document.createElement("option");
-
-            option.value =
-              nome;
-
-            option.textContent =
-              nome;
-
-            separador.appendChild(
-              option
-            );
-
-          }
-        );
-
-
-        separador.disabled = false;
-
-
-        if (lista.length === 0) {
-
-          mostrarStatus(
-            "Nenhum separador encontrado na aba Cadastro.",
-            "error"
-          );
-
-          return;
-
-        }
-
+      } catch (erro) {
 
         mostrarStatus(
-          "Separadores carregados.",
-          "success"
+          erro.message,
+          true
         );
+
+      }
+
+
+      removerScript(
+        callback
+      );
+
+    };
+
+
+  const script =
+    document.createElement(
+      'script'
+    );
+
+
+  script.src =
+    URL_API +
+    '?acao=separadores' +
+    '&chave=' +
+    encodeURIComponent(
+      CHAVE
+    ) +
+    '&callback=' +
+    callback;
+
+
+  script.onerror =
+    function() {
+
+      mostrarStatus(
+        'Não foi possível carregar os separadores.',
+        true
+      );
+
+      removerScript(
+        callback
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   REMOVER SCRIPT JSONP
+   ===================================================== */
+
+function removerScript(
+  nomeCallback
+) {
+
+  document
+    .querySelectorAll(
+      'script'
+    )
+    .forEach(
+      function(script) {
+
+        if (
+          script.src &&
+          script.src.includes(
+            nomeCallback
+          )
+        ) {
+
+          script.remove();
+
+        }
 
       }
     );
 
+
+  try {
+
+    delete window[
+      nomeCallback
+    ];
+
+  } catch (e) {}
+
+}
+
+
+/* =====================================================
+   INICIALIZAÇÃO
+   ===================================================== */
+
+carregarSeparadores();
+
+
+/* =====================================================
+   INICIAR CONFERÊNCIA
+   ===================================================== */
+
+function iniciarConferencia() {
+
+  const select =
+    document.getElementById(
+      'separador'
+    );
+
+
+  if (!select.value) {
+
+    alert(
+      'Selecione o separador.'
+    );
+
+    return;
+
   }
 
 
-  /*
-   * ==========================================================
-   * SELEÇÃO DO SEPARADOR
-   * ==========================================================
-   */
+  separador =
+    select.value;
 
-  separador.addEventListener(
-    "change",
+
+  atualizarTelaContador();
+
+
+  document
+    .getElementById(
+      'telaInicial'
+    )
+    .classList.add(
+      'oculto'
+    );
+
+
+  document
+    .getElementById(
+      'telaConferencia'
+    )
+    .classList.remove(
+      'oculto'
+    );
+
+
+  iniciarCamera();
+
+}
+
+
+/* =====================================================
+   CÂMERA
+   ===================================================== */
+
+function iniciarCamera() {
+
+  if (
+    typeof Html5Qrcode ===
+    'undefined'
+  ) {
+
+    mostrarStatus(
+      'O leitor de código de barras não foi carregado. Verifique a conexão com a internet.',
+      true
+    );
+
+    return;
+
+  }
+
+
+  if (scanner) {
+
+    return;
+
+  }
+
+
+  scanner =
+    new Html5Qrcode(
+      'reader'
+    );
+
+
+  const formatos = [
+
+    Html5QrcodeSupportedFormats.CODE_128,
+
+    Html5QrcodeSupportedFormats.CODE_39,
+
+    Html5QrcodeSupportedFormats.CODE_93,
+
+    Html5QrcodeSupportedFormats.EAN_13,
+
+    Html5QrcodeSupportedFormats.EAN_8,
+
+    Html5QrcodeSupportedFormats.UPC_A,
+
+    Html5QrcodeSupportedFormats.UPC_E
+
+  ];
+
+
+  const configuracao = {
+
+    fps: 10,
+
+    formatsToSupport:
+      formatos,
+
+    qrbox:
+      function(
+        largura,
+        altura
+      ) {
+
+        const tamanho =
+          Math.min(
+            largura * 0.85,
+            350
+          );
+
+
+        return {
+
+          width:
+            tamanho,
+
+          height:
+            Math.min(
+              tamanho * 0.45,
+              altura * 0.7
+            )
+
+        };
+
+      }
+
+  };
+
+
+  scanner.start(
+
+    {
+      facingMode:
+        'environment'
+    },
+
+    configuracao,
+
+    quandoCodigoForLido,
+
     function() {
 
-      btnIniciar.disabled =
-        !separador.value;
+      /*
+       * Tentativas sem encontrar
+       * código são ignoradas.
+       */
+
+    }
+
+  )
+
+  .then(
+    function() {
+
+      mostrarStatus(
+        'Câmera pronta. Aponte para o código de barras.',
+        false
+      );
+
+    }
+  )
+
+  .catch(
+    function(erro) {
+
+      mostrarStatus(
+        'Não foi possível abrir a câmera. Verifique a permissão de câmera do navegador.',
+        true
+      );
+
+      console.error(
+        erro
+      );
 
     }
   );
 
-
-  /*
-   * ==========================================================
-   * CALCULAR TURNO
-   *
-   * Até 12:00 = Manhã
-   * Após 12:00 = Tarde
-   * ==========================================================
-   */
-
-  function obterTurno() {
-
-    const agora =
-      new Date();
-
-    const hora =
-      agora.getHours();
-
-    const minuto =
-      agora.getMinutes();
-
-    const minutosDoDia =
-      (hora * 60) +
-      minuto;
+}
 
 
-    if (
-      minutosDoDia <= 720
-    ) {
+/* =====================================================
+   CÓDIGO FOI LIDO
+   ===================================================== */
 
-      return "Manhã";
+function quandoCodigoForLido(
+  codigo
+) {
 
-    }
+  codigo =
+    String(
+      codigo || ''
+    ).trim();
 
 
-    return "Tarde";
+  if (!codigo) {
 
-  }
-
-
-  function atualizarTurno() {
-
-    turnoAtual.textContent =
-      obterTurno();
+    return;
 
   }
 
 
   /*
-   * ==========================================================
-   * INICIAR CONFERÊNCIA
-   * ==========================================================
+   * Se já existe um pedido esperando
+   * confirmação, ignoramos qualquer
+   * outra leitura.
    */
 
-  function iniciarConferencia() {
-
-    const nomeSeparador =
-      separador.value;
-
-
-    if (!nomeSeparador) {
-
-      mostrarStatus(
-        "Selecione um separador.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    conferenciaAtiva = true;
-
-
-    separadorAtual.textContent =
-      nomeSeparador;
-
-
-    atualizarTurno();
-
-
-    ultimoPedido.textContent =
-      "-";
-
-
-    areaConferencia.classList.remove(
-      "hidden"
-    );
-
-
-    separador.disabled = true;
-
-    btnIniciar.disabled = true;
-
-    pedido.disabled = false;
-
-    btnRegistrar.disabled = false;
-
-
-    carregarQuantidadeHoje(
-      nomeSeparador
-    );
-
-
-    pedido.focus();
-
-
-    mostrarStatus(
-      "Conferência iniciada.",
-      "success"
-    );
-
-  }
-
-
-  /*
-   * ==========================================================
-   * QUANTIDADE DE PEDIDOS DO DIA
-   * ==========================================================
-   */
-
-  function carregarQuantidadeHoje(
-    nomeSeparador
+  if (
+    pedidoPendente ||
+    processando
   ) {
 
-    chamarAPI(
-      {
-        acao: "quantidade",
-        chave: CHAVE,
-        separador: nomeSeparador
-      },
-
-      function(resposta) {
-
-        console.log(
-          "Quantidade:",
-          resposta
-        );
-
-
-        if (
-          resposta &&
-          resposta.sucesso === true
-        ) {
-
-          quantidadeHoje.textContent =
-            resposta.quantidade || 0;
-
-        }
-
-      }
-    );
+    return;
 
   }
 
 
   /*
-   * ==========================================================
-   * REGISTRAR PEDIDO
-   * ==========================================================
+   * Proteção contra a câmera ler
+   * repetidamente o mesmo código.
    */
 
-  function registrarPedido() {
-
-    if (!conferenciaAtiva) {
-
-      mostrarStatus(
-        "Inicie uma conferência primeiro.",
-        "error"
-      );
-
-      return;
-
-    }
+  const agora =
+    Date.now();
 
 
-    const numeroPedido =
-      pedido.value.trim();
+  if (
+
+    codigo === ultimoCodigo &&
+
+    agora -
+    ultimoMomento <
+    5000
+
+  ) {
+
+    return;
+
+  }
 
 
-    const nomeSeparador =
-      separador.value;
+  ultimoCodigo =
+    codigo;
 
 
-    if (!numeroPedido) {
-
-      mostrarStatus(
-        "Digite ou bipe o número do pedido.",
-        "error"
-      );
-
-      pedido.focus();
-
-      return;
-
-    }
+  ultimoMomento =
+    agora;
 
 
-    if (!nomeSeparador) {
+  /*
+   * Guarda o pedido, mas NÃO grava
+   * ainda na planilha.
+   */
 
-      mostrarStatus(
-        "O separador não foi informado.",
-        "error"
-      );
-
-      return;
-
-    }
+  pedidoPendente =
+    codigo;
 
 
-    btnRegistrar.disabled = true;
+  /*
+   * Mostra a confirmação.
+   */
 
-    pedido.disabled = true;
+  document
+    .getElementById(
+      'pedidoConfirmacao'
+    )
+    .textContent =
+    codigo;
 
 
-    mostrarStatus(
-      "Registrando pedido...",
-      "loading"
+  document
+    .getElementById(
+      'confirmacao'
+    )
+    .classList.remove(
+      'oculto'
     );
 
 
-    chamarAPI(
-      {
-        acao: "registrar",
-        chave: CHAVE,
-        pedido: numeroPedido,
-        separador: nomeSeparador
-      },
+  mostrarStatus(
+    'Confirme o número do pedido.',
+    false
+  );
 
-      function(resposta) {
+}
 
-        console.log(
-          "Registro:",
-          resposta
-        );
 
+/* =====================================================
+   SIM
+   ===================================================== */
+
+function confirmarPedido() {
+
+  if (
+    !pedidoPendente ||
+    processando
+  ) {
+
+    return;
+
+  }
+
+
+  const pedido =
+    pedidoPendente;
+
+
+  fecharConfirmacao();
+
+
+  registrarPedido(
+    pedido
+  );
+
+}
+
+
+/* =====================================================
+   NÃO
+   ===================================================== */
+
+function recusarPedido() {
+
+  pedidoPendente =
+    '';
+
+
+  fecharConfirmacao();
+
+
+  /*
+   * Mantém o mesmo código bloqueado
+   * por alguns segundos para evitar que
+   * a câmera abra a confirmação novamente
+   * imediatamente.
+   */
+
+  ultimoMomento =
+    Date.now();
+
+
+  mostrarStatus(
+    'Leitura descartada. A câmera está pronta para o próximo pedido.',
+    false
+  );
+
+}
+
+
+/* =====================================================
+   FECHAR CONFIRMAÇÃO
+   ===================================================== */
+
+function fecharConfirmacao() {
+
+  document
+    .getElementById(
+      'confirmacao'
+    )
+    .classList.add(
+      'oculto'
+    );
+
+
+  document
+    .getElementById(
+      'pedidoConfirmacao'
+    )
+    .textContent =
+    '';
+
+}
+
+
+/* =====================================================
+   REGISTRAR PEDIDO
+   ===================================================== */
+
+function registrarPedido(
+  pedido
+) {
+
+  if (processando) {
+
+    return;
+
+  }
+
+
+  processando =
+    true;
+
+
+  document
+    .getElementById(
+      'btnSim'
+    )
+    .disabled =
+    true;
+
+
+  document
+    .getElementById(
+      'btnNao'
+    )
+    .disabled =
+    true;
+
+
+  mostrarStatus(
+    'Registrando pedido ' +
+    pedido +
+    '...',
+    false
+  );
+
+
+  const callback =
+    'callbackRegistro_' +
+    Date.now();
+
+
+  window[callback] =
+    function(dados) {
+
+      try {
 
         if (
-          !resposta ||
-          resposta.sucesso !== true
+          !dados ||
+          !dados.sucesso
         ) {
 
-          mostrarStatus(
-            resposta &&
-            resposta.erro
-              ? resposta.erro
-              : "Não foi possível registrar o pedido.",
-            "error"
+          throw new Error(
+            dados &&
+            dados.erro
+              ? dados.erro
+              : 'Não foi possível registrar o pedido.'
           );
-
-
-          btnRegistrar.disabled = false;
-
-          pedido.disabled = false;
-
-          pedido.focus();
-
-          return;
 
         }
 
 
         /*
-         * Atualiza a interface somente depois
-         * de o Apps Script confirmar o registro.
+         * O Apps Script atual grava:
+         *
+         * A = Data
+         * B = Turno
+         * C = Pedido
+         * D = Separador
+         *
+         * E:L permanecem intocadas.
          */
 
-        ultimoPedido.textContent =
-          resposta.pedido;
+        adicionarAoContador();
 
 
-        const atual =
-          Number(
-            quantidadeHoje.textContent
-          ) || 0;
+        document
+          .getElementById(
+            'ultimo'
+          )
+          .classList.remove(
+            'oculto'
+          );
 
 
-        quantidadeHoje.textContent =
-          atual + 1;
-
-
-        turnoAtual.textContent =
-          resposta.turno ||
-          obterTurno();
-
-
-        pedido.value = "";
+        document
+          .getElementById(
+            'ultimoPedido'
+          )
+          .textContent =
+          dados.pedido;
 
 
         mostrarStatus(
-          "Pedido " +
-          resposta.pedido +
-          " registrado com sucesso.",
-          "success"
+          '✓ Pedido ' +
+          dados.pedido +
+          ' registrado!',
+          false
         );
 
 
-        btnRegistrar.disabled = false;
+        /*
+         * Limpa a leitura pendente
+         * e mantém a câmera ligada.
+         */
 
-        pedido.disabled = false;
-
-        pedido.focus();
-
-      }
-    );
-
-  }
+        pedidoPendente =
+          '';
 
 
-  /*
-   * ==========================================================
-   * ENTER NO PEDIDO
-   * ==========================================================
-   */
+        ultimoCodigo =
+          dados.pedido;
 
-  pedido.addEventListener(
-    "keydown",
-    function(event) {
 
-      if (
-        event.key === "Enter"
-      ) {
+        ultimoMomento =
+          Date.now();
 
-        event.preventDefault();
 
-        registrarPedido();
+      } catch (erro) {
+
+        mostrarStatus(
+          erro.message,
+          true
+        );
 
       }
 
-    }
-  );
+
+      processando =
+        false;
+
+
+      document
+        .getElementById(
+          'btnSim'
+        )
+        .disabled =
+        false;
+
+
+      document
+        .getElementById(
+          'btnNao'
+        )
+        .disabled =
+        false;
+
+
+      removerScript(
+        callback
+      );
+
+    };
 
 
   /*
-   * ==========================================================
-   * FINALIZAR CONFERÊNCIA
-   * ==========================================================
+   * IMPORTANTE:
+   *
+   * Não enviamos conferente.
+   *
+   * Enviamos somente:
+   * pedido
+   * separador
    */
 
-  function finalizarConferencia() {
-
-    conferenciaAtiva = false;
-
-
-    areaConferencia.classList.add(
-      "hidden"
+  const script =
+    document.createElement(
+      'script'
     );
 
 
-    pedido.value = "";
+  script.src =
 
-    pedido.disabled = true;
+    URL_API +
 
-    btnRegistrar.disabled = true;
+    '?acao=registrar' +
 
+    '&chave=' +
+    encodeURIComponent(
+      CHAVE
+    ) +
 
-    ultimoPedido.textContent =
-      "-";
+    '&pedido=' +
+    encodeURIComponent(
+      pedido
+    ) +
 
+    '&separador=' +
+    encodeURIComponent(
+      separador
+    ) +
 
-    quantidadeHoje.textContent =
-      "0";
-
-
-    separador.disabled = false;
-
-
-    btnIniciar.disabled =
-      !separador.value;
-
-
-    mostrarStatus(
-      "Conferência finalizada.",
-      "success"
-    );
+    '&callback=' +
+    callback;
 
 
-    separador.focus();
-
-  }
-
-
-  /*
-   * ==========================================================
-   * BOTÕES
-   * ==========================================================
-   */
-
-  btnIniciar.addEventListener(
-    "click",
-    iniciarConferencia
-  );
-
-
-  btnRegistrar.addEventListener(
-    "click",
-    registrarPedido
-  );
-
-
-  btnFinalizar.addEventListener(
-    "click",
-    finalizarConferencia
-  );
-
-
-  /*
-   * ==========================================================
-   * ATUALIZAÇÃO DO TURNO
-   * ==========================================================
-   */
-
-  setInterval(
+  script.onerror =
     function() {
 
-      if (conferenciaAtiva) {
+      processando =
+        false;
 
-        atualizarTurno();
 
-      }
+      document
+        .getElementById(
+          'btnSim'
+        )
+        .disabled =
+        false;
 
-    },
-    30000
+
+      document
+        .getElementById(
+          'btnNao'
+        )
+        .disabled =
+        false;
+
+
+      mostrarStatus(
+        'Erro de comunicação com o Google Sheets.',
+        true
+      );
+
+
+      removerScript(
+        callback
+      );
+
+    };
+
+
+  document.body.appendChild(
+    script
+  );
+
+}
+
+
+/* =====================================================
+   CONTADOR
+   ===================================================== */
+
+function adicionarAoContador() {
+
+  const atual =
+    obterContadorLocal();
+
+
+  const novo =
+    atual + 1;
+
+
+  salvarContadorLocal(
+    novo
   );
 
 
-  /*
-   * ==========================================================
-   * INICIALIZAÇÃO
-   * ==========================================================
-   */
+  document
+    .getElementById(
+      'contador'
+    )
+    .textContent =
+    novo;
 
-  carregarSeparadores();
+}
+
+
+/* =====================================================
+   FINALIZAR
+   ===================================================== */
+
+function finalizarConferencia() {
+
+  if (
+    pedidoPendente
+  ) {
+
+    alert(
+      'Confirme ou descarte o pedido que está aguardando antes de finalizar.'
+    );
+
+    return;
+
+  }
+
+
+  if (
+    !confirm(
+      'Deseja finalizar esta conferência?'
+    )
+  ) {
+
+    return;
+
+  }
+
+
+  if (scanner) {
+
+    scanner
+      .stop()
+      .then(
+        function() {
+
+          scanner.clear();
+
+          scanner =
+            null;
+
+          voltarInicio();
+
+        }
+      )
+      .catch(
+        function() {
+
+          scanner =
+            null;
+
+          voltarInicio();
+
+        }
+      );
+
+  } else {
+
+    voltarInicio();
+
+  }
+
+}
+
+
+/* =====================================================
+   VOLTAR PARA INÍCIO
+   ===================================================== */
+
+function voltarInicio() {
+
+  document
+    .getElementById(
+      'telaConferencia'
+    )
+    .classList.add(
+      'oculto'
+    );
+
+
+  document
+    .getElementById(
+      'telaInicial'
+    )
+    .classList.remove(
+      'oculto'
+    );
+
+
+  document
+    .getElementById(
+      'reader'
+    )
+    .innerHTML =
+    '';
+
+
+  document
+    .getElementById(
+      'status'
+    )
+    .classList.add(
+      'oculto'
+    );
+
+
+  document
+    .getElementById(
+      'ultimo'
+    )
+    .classList.add(
+      'oculto'
+    );
+
+
+  fecharConfirmacao();
+
+
+  scanner =
+    null;
+
+
+  separador =
+    '';
+
+
+  pedidoPendente =
+    '';
+
+
+  ultimoCodigo =
+    '';
+
+
+  ultimoMomento =
+    0;
+
+
+  processando =
+    false;
+
+}
+
+
+/* =====================================================
+   MENSAGENS
+   ===================================================== */
+
+function mostrarStatus(
+  mensagem,
+  erro
+) {
+
+  const status =
+    document.getElementById(
+      'status'
+    );
+
+
+  status.textContent =
+    mensagem;
+
+
+  status.classList.remove(
+    'oculto',
+    'erro',
+    'sucesso'
+  );
+
+
+  if (erro) {
+
+    status.classList.add(
+      'erro'
+    );
+
+  } else {
+
+    status.classList.add(
+      'sucesso'
+    );
+
+  }
+
+}
 
 </script>
 
 </body>
+
 </html>
