@@ -18,14 +18,9 @@
     }
 
     body {
-      font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
-
+      font-family: Arial, Helvetica, sans-serif;
       background: #f4f6f8;
       color: #202124;
-
       min-height: 100vh;
 
       display: flex;
@@ -42,9 +37,7 @@
 
     .card {
       background: #ffffff;
-
       border-radius: 18px;
-
       padding: 28px;
 
       box-shadow:
@@ -72,21 +65,15 @@
 
     h1 {
       text-align: center;
-
       font-size: 25px;
-
       margin-bottom: 8px;
-
       color: #111827;
     }
 
     .subtitle {
       text-align: center;
-
       color: #6b7280;
-
       font-size: 14px;
-
       margin-bottom: 28px;
     }
 
@@ -98,7 +85,6 @@
       display: block;
 
       font-size: 14px;
-
       font-weight: bold;
 
       color: #374151;
@@ -109,11 +95,9 @@
     select,
     input {
       width: 100%;
-
       height: 52px;
 
       border: 1px solid #d1d5db;
-
       border-radius: 10px;
 
       padding: 0 14px;
@@ -135,15 +119,12 @@
 
     button {
       width: 100%;
-
       height: 52px;
 
       border: none;
-
       border-radius: 10px;
 
       font-size: 16px;
-
       font-weight: bold;
 
       cursor: pointer;
@@ -155,6 +136,11 @@
       transform: scale(0.98);
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .btn-principal {
       background: #111827;
       color: #ffffff;
@@ -164,21 +150,9 @@
       background: #1f2937;
     }
 
-    .btn-secundario {
-      background: #e5e7eb;
-      color: #111827;
-
-      margin-top: 12px;
-    }
-
-    .btn-secundario:hover {
-      background: #d1d5db;
-    }
-
     .btn-finalizar {
       background: #fee2e2;
       color: #991b1b;
-
       margin-top: 18px;
     }
 
@@ -332,18 +306,7 @@
       font-size: 12px;
     }
 
-    .loading {
-      text-align: center;
-
-      padding: 10px 0;
-
-      color: #6b7280;
-
-      font-size: 14px;
-    }
-
     @media (max-width: 420px) {
-
       body {
         padding: 12px;
       }
@@ -359,17 +322,15 @@
   </style>
 </head>
 
-
 <body>
 
   <main class="app">
 
     <div class="card">
 
-
-      <!-- ================================================= -->
+      <!-- ============================= -->
       <!-- TELA INICIAL -->
-      <!-- ================================================= -->
+      <!-- ============================= -->
 
       <section
         id="telaInicial"
@@ -388,7 +349,6 @@
           Controle de conferência
         </p>
 
-
         <div class="campo">
 
           <label for="separador">
@@ -405,7 +365,6 @@
 
         </div>
 
-
         <button
           id="btnIniciar"
           class="btn-principal"
@@ -413,7 +372,6 @@
         >
           Iniciar conferência
         </button>
-
 
         <div
           id="statusInicial"
@@ -423,10 +381,9 @@
       </section>
 
 
-
-      <!-- ================================================= -->
+      <!-- ============================= -->
       <!-- TELA DE CONFERÊNCIA -->
-      <!-- ================================================= -->
+      <!-- ============================= -->
 
       <section
         id="telaConferencia"
@@ -440,7 +397,6 @@
         <h1>
           Conferência
         </h1>
-
 
         <div class="separador-atual">
 
@@ -558,137 +514,79 @@
   </main>
 
 
-
   <script>
 
-    /*
-     * ====================================================
-     * CONFIGURAÇÃO
-     * ====================================================
-     */
-
+    /* ============================================
+       CONFIGURAÇÃO DA API
+       ============================================ */
 
     const URL_API =
-      'https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec';
-
+      'https://script.google.com/macros/s/AKfycbyzAQ1ov6pG_vs9WADubcDKU9t4ZofCA5KzMqVz4KgjEI3c_B1stR_1cn5OXwRty8Cx/exec';
 
     const CHAVE_APP =
       'KING-CONFERENCIA-2026';
 
 
-
-    /*
-     * ====================================================
-     * ELEMENTOS
-     * ====================================================
-     */
-
+    /* ============================================
+       ELEMENTOS
+       ============================================ */
 
     const telaInicial =
-      document.getElementById(
-        'telaInicial'
-      );
-
+      document.getElementById('telaInicial');
 
     const telaConferencia =
-      document.getElementById(
-        'telaConferencia'
-      );
-
+      document.getElementById('telaConferencia');
 
     const separador =
-      document.getElementById(
-        'separador'
-      );
-
+      document.getElementById('separador');
 
     const pedido =
-      document.getElementById(
-        'pedido'
-      );
-
+      document.getElementById('pedido');
 
     const btnIniciar =
-      document.getElementById(
-        'btnIniciar'
-      );
-
+      document.getElementById('btnIniciar');
 
     const btnRegistrar =
-      document.getElementById(
-        'btnRegistrar'
-      );
-
+      document.getElementById('btnRegistrar');
 
     const btnFinalizar =
-      document.getElementById(
-        'btnFinalizar'
-      );
-
+      document.getElementById('btnFinalizar');
 
     const statusInicial =
-      document.getElementById(
-        'statusInicial'
-      );
-
+      document.getElementById('statusInicial');
 
     const statusConferencia =
-      document.getElementById(
-        'statusConferencia'
-      );
-
+      document.getElementById('statusConferencia');
 
     const contador =
-      document.getElementById(
-        'contador'
-      );
-
+      document.getElementById('contador');
 
     const ultimoPedido =
-      document.getElementById(
-        'ultimoPedido'
-      );
-
+      document.getElementById('ultimoPedido');
 
     const separadorAtual =
-      document.getElementById(
-        'separadorAtual'
-      );
-
+      document.getElementById('separadorAtual');
 
     const turnoAtual =
-      document.getElementById(
-        'turnoAtual'
-      );
+      document.getElementById('turnoAtual');
 
 
+    /* ============================================
+       VARIÁVEIS
+       ============================================ */
 
-    /*
-     * ====================================================
-     * VARIÁVEIS
-     * ====================================================
-     */
+    let separadorSelecionado = '';
 
-
-    let separadorSelecionado =
-      '';
+    let enviando = false;
 
 
-    let enviando =
-      false;
-
-
-
-    /*
-     * ====================================================
-     * INICIALIZAÇÃO
-     * ====================================================
-     */
-
+    /* ============================================
+       INÍCIO
+       ============================================ */
 
     document.addEventListener(
       'DOMContentLoaded',
-      function() {
+      function () {
 
         carregarSeparadores();
 
@@ -696,13 +594,9 @@
     );
 
 
-
-    /*
-     * ====================================================
-     * CARREGAR SEPARADORES
-     * ====================================================
-     */
-
+    /* ============================================
+       CARREGAR SEPARADORES
+       ============================================ */
 
     function carregarSeparadores() {
 
@@ -715,24 +609,23 @@
 
       const callback =
         criarCallback(
-          function(resposta) {
+          function (resposta) {
 
             if (
               !resposta ||
               resposta.sucesso !== true
             ) {
 
+              separador.innerHTML =
+                '<option value="">Erro ao carregar</option>';
+
               mostrarStatus(
                 statusInicial,
-                resposta &&
-                resposta.erro
+                resposta && resposta.erro
                   ? resposta.erro
                   : 'Não foi possível carregar os separadores.',
                 'erro'
               );
-
-              separador.innerHTML =
-                '<option value="">Erro ao carregar</option>';
 
               return;
             }
@@ -746,28 +639,21 @@
                 : [];
 
 
-            separador.innerHTML =
-              '';
+            separador.innerHTML = '';
 
 
-            if (
-              lista.length === 0
-            ) {
+            if (lista.length === 0) {
 
               const option =
-                document.createElement(
-                  'option'
-                );
+                document.createElement('option');
 
-              option.value =
-                '';
+              option.value = '';
 
               option.textContent =
                 'Nenhum separador cadastrado';
 
-              separador.appendChild(
-                option
-              );
+              separador.appendChild(option);
+
 
               mostrarStatus(
                 statusInicial,
@@ -780,12 +666,9 @@
 
 
             const primeiraOpcao =
-              document.createElement(
-                'option'
-              );
+              document.createElement('option');
 
-            primeiraOpcao.value =
-              '';
+            primeiraOpcao.value = '';
 
             primeiraOpcao.textContent =
               'Selecione o separador';
@@ -796,18 +679,14 @@
 
 
             lista.forEach(
-              function(nome) {
+              function (nome) {
 
                 const option =
-                  document.createElement(
-                    'option'
-                  );
+                  document.createElement('option');
 
-                option.value =
-                  nome;
+                option.value = nome;
 
-                option.textContent =
-                  nome;
+                option.textContent = nome;
 
                 separador.appendChild(
                   option
@@ -831,13 +710,9 @@
         URL_API +
         '?acao=separadores' +
         '&chave=' +
-        encodeURIComponent(
-          CHAVE_APP
-        ) +
+        encodeURIComponent(CHAVE_APP) +
         '&callback=' +
-        encodeURIComponent(
-          callback
-        );
+        encodeURIComponent(callback);
 
 
       carregarJSONP(
@@ -848,17 +723,13 @@
     }
 
 
-
-    /*
-     * ====================================================
-     * INICIAR CONFERÊNCIA
-     * ====================================================
-     */
-
+    /* ============================================
+       INICIAR CONFERÊNCIA
+       ============================================ */
 
     btnIniciar.addEventListener(
       'click',
-      function() {
+      function () {
 
         const nome =
           separador.value.trim();
@@ -903,7 +774,7 @@
 
 
         setTimeout(
-          function() {
+          function () {
 
             pedido.focus();
 
@@ -915,13 +786,9 @@
     );
 
 
-
-    /*
-     * ====================================================
-     * REGISTRAR PEDIDO
-     * ====================================================
-     */
-
+    /* ============================================
+       REGISTRAR PEDIDO
+       ============================================ */
 
     btnRegistrar.addEventListener(
       'click',
@@ -931,7 +798,7 @@
 
     pedido.addEventListener(
       'keydown',
-      function(event) {
+      function (event) {
 
         if (
           event.key === 'Enter'
@@ -945,7 +812,6 @@
 
       }
     );
-
 
 
     function registrarPedido() {
@@ -987,13 +853,9 @@
       }
 
 
-      enviando =
-        true;
+      enviando = true;
 
-
-      btnRegistrar.disabled =
-        true;
-
+      btnRegistrar.disabled = true;
 
       btnRegistrar.textContent =
         'Registrando...';
@@ -1008,15 +870,11 @@
 
       const callback =
         criarCallback(
-          function(resposta) {
+          function (resposta) {
 
-            enviando =
-              false;
+            enviando = false;
 
-
-            btnRegistrar.disabled =
-              false;
-
+            btnRegistrar.disabled = false;
 
             btnRegistrar.textContent =
               'Registrar pedido';
@@ -1029,8 +887,7 @@
 
               mostrarStatus(
                 statusConferencia,
-                resposta &&
-                resposta.erro
+                resposta && resposta.erro
                   ? resposta.erro
                   : 'Não foi possível registrar o pedido.',
                 'erro'
@@ -1047,8 +904,7 @@
               numeroPedido;
 
 
-            pedido.value =
-              '';
+            pedido.value = '';
 
 
             mostrarStatus(
@@ -1058,9 +914,7 @@
             );
 
 
-            if (
-              resposta.turno
-            ) {
+            if (resposta.turno) {
 
               turnoAtual.textContent =
                 resposta.turno;
@@ -1086,21 +940,13 @@
         URL_API +
         '?acao=registrar' +
         '&chave=' +
-        encodeURIComponent(
-          CHAVE_APP
-        ) +
+        encodeURIComponent(CHAVE_APP) +
         '&pedido=' +
-        encodeURIComponent(
-          numeroPedido
-        ) +
+        encodeURIComponent(numeroPedido) +
         '&separador=' +
-        encodeURIComponent(
-          separadorSelecionado
-        ) +
+        encodeURIComponent(separadorSelecionado) +
         '&callback=' +
-        encodeURIComponent(
-          callback
-        );
+        encodeURIComponent(callback);
 
 
       carregarJSONP(
@@ -1111,26 +957,20 @@
     }
 
 
-
-    /*
-     * ====================================================
-     * CARREGAR QUANTIDADE
-     * ====================================================
-     */
-
+    /* ============================================
+       QUANTIDADE DE PEDIDOS
+       ============================================ */
 
     function carregarQuantidade() {
 
-      if (
-        !separadorSelecionado
-      ) {
+      if (!separadorSelecionado) {
         return;
       }
 
 
       const callback =
         criarCallback(
-          function(resposta) {
+          function (resposta) {
 
             if (
               resposta &&
@@ -1150,17 +990,11 @@
         URL_API +
         '?acao=quantidade' +
         '&chave=' +
-        encodeURIComponent(
-          CHAVE_APP
-        ) +
+        encodeURIComponent(CHAVE_APP) +
         '&separador=' +
-        encodeURIComponent(
-          separadorSelecionado
-        ) +
+        encodeURIComponent(separadorSelecionado) +
         '&callback=' +
-        encodeURIComponent(
-          callback
-        );
+        encodeURIComponent(callback);
 
 
       carregarJSONP(
@@ -1171,20 +1005,9 @@
     }
 
 
-
-    /*
-     * ====================================================
-     * TURNO VISUAL
-     * ====================================================
-     *
-     * Até 12:00 = Manhã
-     * Após 12:00 = Tarde
-     *
-     * O registro oficial é definido
-     * pelo servidor Apps Script.
-     *
-     */
-
+    /* ============================================
+       TURNO
+       ============================================ */
 
     function atualizarTurnoVisual() {
 
@@ -1213,17 +1036,13 @@
     }
 
 
-
-    /*
-     * ====================================================
-     * FINALIZAR
-     * ====================================================
-     */
-
+    /* ============================================
+       FINALIZAR
+       ============================================ */
 
     btnFinalizar.addEventListener(
       'click',
-      function() {
+      function () {
 
         const confirmar =
           window.confirm(
@@ -1242,31 +1061,20 @@
     );
 
 
-
     function voltarParaInicio() {
 
-      separadorSelecionado =
-        '';
+      separadorSelecionado = '';
 
+      pedido.value = '';
 
-      pedido.value =
-        '';
-
-
-      contador.textContent =
-        '0';
-
+      contador.textContent = '0';
 
       ultimoPedido.textContent =
         'Nenhum ainda';
 
+      turnoAtual.textContent = '-';
 
-      turnoAtual.textContent =
-        '-';
-
-
-      separadorAtual.textContent =
-        '-';
+      separadorAtual.textContent = '-';
 
 
       mostrarStatus(
@@ -1286,12 +1094,11 @@
       );
 
 
-      separador.value =
-        '';
+      separador.value = '';
 
 
       setTimeout(
-        function() {
+        function () {
 
           separador.focus();
 
@@ -1302,13 +1109,9 @@
     }
 
 
-
-    /*
-     * ====================================================
-     * STATUS
-     * ====================================================
-     */
-
+    /* ============================================
+       STATUS
+       ============================================ */
 
     function mostrarStatus(
       elemento,
@@ -1335,23 +1138,11 @@
     }
 
 
+    /* ============================================
+       CRIAR CALLBACK JSONP
+       ============================================ */
 
-    /*
-     * ====================================================
-     * JSONP
-     * ====================================================
-     *
-     * O GitHub Pages e o Apps Script
-     * estão em domínios diferentes.
-     *
-     * Por isso usamos JSONP.
-     *
-     */
-
-
-    function criarCallback(
-      funcao
-    ) {
+    function criarCallback(funcao) {
 
       const nome =
         'callback_' +
@@ -1363,7 +1154,7 @@
 
 
       window[nome] =
-        function(dados) {
+        function (dados) {
 
           try {
 
@@ -1379,8 +1170,7 @@
             }
             catch (erro) {
 
-              window[nome] =
-                undefined;
+              window[nome] = undefined;
 
             }
 
@@ -1394,6 +1184,9 @@
     }
 
 
+    /* ============================================
+       FAZER REQUISIÇÃO JSONP
+       ============================================ */
 
     function carregarJSONP(
       url,
@@ -1401,50 +1194,38 @@
     ) {
 
       const script =
-        document.createElement(
-          'script'
-        );
+        document.createElement('script');
 
 
-      script.src =
-        url;
+      script.src = url;
+
+      script.async = true;
 
 
-      script.async =
-        true;
-
-
-      let finalizado =
-        false;
+      let finalizado = false;
 
 
       const timeout =
         setTimeout(
-          function() {
+          function () {
 
-            if (
-              finalizado
-            ) {
+            if (finalizado) {
               return;
             }
 
 
-            finalizado =
-              true;
+            finalizado = true;
 
 
             script.remove();
 
 
             if (
-              typeof window[
-                callback
-              ] === 'function'
+              typeof window[callback] ===
+              'function'
             ) {
 
-              window[
-                callback
-              ]({
+              window[callback]({
 
                 sucesso: false,
 
@@ -1461,36 +1242,28 @@
 
 
       script.onerror =
-        function() {
+        function () {
 
-          if (
-            finalizado
-          ) {
+          if (finalizado) {
             return;
           }
 
 
-          finalizado =
-            true;
+          finalizado = true;
 
 
-          clearTimeout(
-            timeout
-          );
+          clearTimeout(timeout);
 
 
           script.remove();
 
 
           if (
-            typeof window[
-              callback
-            ] === 'function'
+            typeof window[callback] ===
+            'function'
           ) {
 
-            window[
-              callback
-            ]({
+            window[callback]({
 
               sucesso: false,
 
