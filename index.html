@@ -3,49 +3,632 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teste API</title>
+
+  <title>Controle Profissional</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f4f6f8;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .header {
+      background: #111827;
+      color: white;
+      border-radius: 18px;
+      padding: 24px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    }
+
+    .logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: white;
+      color: #111827;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 16px;
+    }
+
+    .header h1 {
+      font-size: 25px;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      color: #d1d5db;
+      font-size: 14px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 18px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+    }
+
+    .label {
+      display: block;
+      font-size: 13px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    select,
+    input {
+      width: 100%;
+      height: 52px;
+      border: 1px solid #d1d5db;
+      border-radius: 12px;
+      padding: 0 14px;
+      font-size: 16px;
+      outline: none;
+      background: white;
+    }
+
+    select:focus,
+    input:focus {
+      border-color: #111827;
+      box-shadow: 0 0 0 3px rgba(17, 24, 39, 0.08);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info {
+      background: #f9fafb;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .info-title {
+      font-size: 12px;
+      color: #6b7280;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #111827;
+    }
+
+    .pedido-area {
+      margin-top: 18px;
+    }
+
+    .pedido-input {
+      font-size: 22px;
+      text-align: center;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    button {
+      width: 100%;
+      height: 52px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.15s;
+    }
+
+    button:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: #111827;
+      color: white;
+      margin-top: 12px;
+    }
+
+    .btn-primary:hover {
+      background: #1f2937;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+      margin-top: 10px;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status {
+      padding: 13px 15px;
+      border-radius: 12px;
+      font-size: 14px;
+      margin-top: 14px;
+      display: none;
+    }
+
+    .status.success {
+      display: block;
+      background: #ecfdf5;
+      color: #065f46;
+    }
+
+    .status.error {
+      display: block;
+      background: #fef2f2;
+      color: #991b1b;
+    }
+
+    .status.loading {
+      display: block;
+      background: #eff6ff;
+      color: #1e40af;
+    }
+
+    .last-order {
+      text-align: center;
+      padding: 18px;
+      background: #f9fafb;
+      border-radius: 14px;
+    }
+
+    .last-order small {
+      display: block;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    .last-order strong {
+      font-size: 26px;
+    }
+
+    .footer {
+      text-align: center;
+      color: #9ca3af;
+      font-size: 12px;
+      padding: 10px 0 20px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        padding: 14px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+
+      .header h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>Teste do Controle Profissional</h1>
+  <div class="container">
 
-  <p id="status">
-    Consultando API...
-  </p>
+    <header class="header">
+      <div class="logo">CP</div>
 
-  <select id="separadores">
-    <option>Carregando...</option>
-  </select>
+      <h1>Controle Profissional</h1>
 
-  <script>
-
-    const API =
-      "https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec";
-
-    const CHAVE =
-      "KING-CONFERENCIA-2026";
+      <p>Controle de conferência</p>
+    </header>
 
 
-    const callback =
-      "testeAPI_" + Date.now();
+    <!-- CONFIGURAÇÃO -->
+    <section class="card">
+
+      <label class="label" for="separador">
+        Separador
+      </label>
+
+      <select id="separador">
+        <option value="">Carregando...</option>
+      </select>
+
+      <button
+        id="btnIniciar"
+        class="btn-primary"
+        onclick="iniciarConferencia()"
+        disabled
+      >
+        Iniciar conferência
+      </button>
+
+      <div
+        id="status"
+        class="status"
+      ></div>
+
+    </section>
 
 
-    window[callback] =
+    <!-- CONFERÊNCIA -->
+    <section
+      id="areaConferencia"
+      class="card hidden"
+    >
+
+      <div class="info-grid">
+
+        <div class="info">
+          <div class="info-title">
+            Separador
+          </div>
+
+          <div
+            id="separadorAtual"
+            class="info-value"
+          >
+            -
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-title">
+            Turno
+          </div>
+
+          <div
+            id="turnoAtual"
+            class="info-value"
+          >
+            -
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-title">
+            Pedidos hoje
+          </div>
+
+          <div
+            id="quantidadeHoje"
+            class="info-value"
+          >
+            0
+          </div>
+        </div>
+
+
+        <div class="info">
+          <div class="info-title">
+            Último pedido
+          </div>
+
+          <div
+            id="ultimoPedido"
+            class="info-value"
+          >
+            -
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="pedido-area">
+
+        <label
+          class="label"
+          for="pedido"
+        >
+          Número do pedido
+        </label>
+
+        <input
+          id="pedido"
+          class="pedido-input"
+          type="text"
+          inputmode="numeric"
+          autocomplete="off"
+          placeholder="Bipe ou digite o pedido"
+          disabled
+        >
+
+        <button
+          id="btnRegistrar"
+          class="btn-primary"
+          onclick="registrarPedido()"
+          disabled
+        >
+          Registrar pedido
+        </button>
+
+        <button
+          class="btn-secondary"
+          onclick="finalizarConferencia()"
+        >
+          Finalizar conferência
+        </button>
+
+      </div>
+
+    </section>
+
+
+    <footer class="footer">
+      Controle Profissional
+    </footer>
+
+  </div>
+
+
+<script>
+
+  /*
+   * ============================================================
+   * CONFIGURAÇÃO
+   * ============================================================
+   */
+
+  const API =
+    "https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec";
+
+  const CHAVE =
+    "KING-CONFERENCIA-2026";
+
+
+  /*
+   * ============================================================
+   * ELEMENTOS
+   * ============================================================
+   */
+
+  const selectSeparador =
+    document.getElementById("separador");
+
+  const btnIniciar =
+    document.getElementById("btnIniciar");
+
+  const areaConferencia =
+    document.getElementById("areaConferencia");
+
+  const separadorAtual =
+    document.getElementById("separadorAtual");
+
+  const turnoAtual =
+    document.getElementById("turnoAtual");
+
+  const quantidadeHoje =
+    document.getElementById("quantidadeHoje");
+
+  const ultimoPedido =
+    document.getElementById("ultimoPedido");
+
+  const pedidoInput =
+    document.getElementById("pedido");
+
+  const btnRegistrar =
+    document.getElementById("btnRegistrar");
+
+  const status =
+    document.getElementById("status");
+
+
+  /*
+   * ============================================================
+   * VARIÁVEIS
+   * ============================================================
+   */
+
+  let conferenciaAtiva = false;
+
+
+  /*
+   * ============================================================
+   * STATUS
+   * ============================================================
+   */
+
+  function mostrarStatus(
+    mensagem,
+    tipo
+  ) {
+
+    status.textContent = mensagem;
+
+    status.className =
+      "status " + tipo;
+
+  }
+
+
+  function esconderStatus() {
+
+    status.textContent = "";
+
+    status.className =
+      "status";
+
+  }
+
+
+  /*
+   * ============================================================
+   * JSONP
+   * ============================================================
+   */
+
+  function chamarAPI(
+    parametros,
+    callback
+  ) {
+
+    const nomeCallback =
+      "controleProfissional_" +
+      Date.now() +
+      "_" +
+      Math.floor(
+        Math.random() * 100000
+      );
+
+
+    window[nomeCallback] =
+      function(resposta) {
+
+        try {
+
+          callback(resposta);
+
+        } finally {
+
+          delete window[nomeCallback];
+
+          if (
+            script &&
+            script.parentNode
+          ) {
+            script.parentNode.removeChild(
+              script
+            );
+          }
+
+        }
+
+      };
+
+
+    const query =
+      new URLSearchParams();
+
+
+    Object.keys(parametros)
+      .forEach(
+        function(chave) {
+
+          query.append(
+            chave,
+            parametros[chave]
+          );
+
+        }
+      );
+
+
+    query.append(
+      "callback",
+      nomeCallback
+    );
+
+
+    const url =
+      API +
+      "?" +
+      query.toString();
+
+
+    const script =
+      document.createElement("script");
+
+
+    script.src = url;
+
+
+    script.onerror =
+      function() {
+
+        delete window[nomeCallback];
+
+        if (
+          script &&
+          script.parentNode
+        ) {
+          script.parentNode.removeChild(
+            script
+          );
+        }
+
+        callback({
+          sucesso: false,
+          erro:
+            "Não foi possível conectar à API."
+        });
+
+      };
+
+
+    document.body.appendChild(
+      script
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * CARREGAR SEPARADORES
+   * ============================================================
+   */
+
+  function carregarSeparadores() {
+
+    mostrarStatus(
+      "Carregando separadores...",
+      "loading"
+    );
+
+
+    selectSeparador.innerHTML =
+      "<option value=''>Carregando...</option>";
+
+    selectSeparador.disabled = true;
+
+    btnIniciar.disabled = true;
+
+
+    chamarAPI(
+      {
+        acao: "separadores",
+        chave: CHAVE
+      },
+
       function(resposta) {
 
         console.log(
-          "RESPOSTA DA API:",
+          "Resposta separadores:",
           resposta
         );
-
-
-        const status =
-          document.getElementById("status");
-
-
-        const select =
-          document.getElementById("separadores");
 
 
         if (
@@ -53,28 +636,44 @@
           resposta.sucesso !== true
         ) {
 
-          status.textContent =
-            "ERRO: " +
-            (
-              resposta &&
-              resposta.erro
-                ? resposta.erro
-                : "Resposta inválida"
-            );
+          selectSeparador.innerHTML =
+            "<option value=''>Erro ao carregar</option>";
+
+          mostrarStatus(
+            resposta &&
+            resposta.erro
+              ? resposta.erro
+              : "Erro ao carregar separadores.",
+            "error"
+          );
 
           return;
+
         }
 
 
-        status.textContent =
-          "API funcionando. Separadores encontrados: " +
-          resposta.separadores.length;
+        const separadores =
+          resposta.separadores || [];
 
 
-        select.innerHTML = "";
+        selectSeparador.innerHTML =
+          "";
 
 
-        resposta.separadores.forEach(
+        const opcaoInicial =
+          document.createElement("option");
+
+        opcaoInicial.value = "";
+
+        opcaoInicial.textContent =
+          "Selecione o separador";
+
+        selectSeparador.appendChild(
+          opcaoInicial
+        );
+
+
+        separadores.forEach(
           function(nome) {
 
             const option =
@@ -86,55 +685,411 @@
             option.textContent =
               nome;
 
-            select.appendChild(
+            selectSeparador.appendChild(
               option
             );
 
           }
         );
 
-      };
+
+        selectSeparador.disabled = false;
 
 
-    const url =
-      API +
-      "?acao=separadores" +
-      "&chave=" +
-      encodeURIComponent(CHAVE) +
-      "&callback=" +
-      callback;
+        if (separadores.length > 0) {
+
+          mostrarStatus(
+            separadores.length +
+            " separador(es) carregado(s).",
+            "success"
+          );
+
+        } else {
+
+          mostrarStatus(
+            "Nenhum separador cadastrado.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+  }
 
 
-    console.log(
-      "URL chamada:",
-      url
+  /*
+   * ============================================================
+   * HABILITAR BOTÃO
+   * ============================================================
+   */
+
+  selectSeparador.addEventListener(
+    "change",
+    function() {
+
+      btnIniciar.disabled =
+        !selectSeparador.value;
+
+    }
+  );
+
+
+  /*
+   * ============================================================
+   * INICIAR CONFERÊNCIA
+   * ============================================================
+   */
+
+  function iniciarConferencia() {
+
+    const separador =
+      selectSeparador.value;
+
+
+    if (!separador) {
+
+      mostrarStatus(
+        "Selecione um separador.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    conferenciaAtiva = true;
+
+
+    separadorAtual.textContent =
+      separador;
+
+
+    atualizarTurno();
+
+
+    areaConferencia.classList.remove(
+      "hidden"
     );
 
 
-    const script =
-      document.createElement("script");
+    pedidoInput.disabled = false;
+
+    btnRegistrar.disabled = false;
+
+    selectSeparador.disabled = true;
+
+    btnIniciar.disabled = true;
 
 
-    script.src =
-      url;
-
-
-    script.onerror =
-      function() {
-
-        document.getElementById(
-          "status"
-        ).textContent =
-          "ERRO: o navegador não conseguiu carregar a resposta da API.";
-
-      };
-
-
-    document.body.appendChild(
-      script
+    carregarQuantidadeHoje(
+      separador
     );
 
-  </script>
+
+    pedidoInput.focus();
+
+
+    mostrarStatus(
+      "Conferência iniciada.",
+      "success"
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * TURNO
+   * ============================================================
+   */
+
+  function atualizarTurno() {
+
+    const agora =
+      new Date();
+
+    const hora =
+      agora.getHours();
+
+    const minuto =
+      agora.getMinutes();
+
+
+    const minutos =
+      (hora * 60) +
+      minuto;
+
+
+    turnoAtual.textContent =
+      minutos <= 720
+        ? "Manhã"
+        : "Tarde";
+
+  }
+
+
+  /*
+   * ============================================================
+   * QUANTIDADE DO DIA
+   * ============================================================
+   */
+
+  function carregarQuantidadeHoje(
+    separador
+  ) {
+
+    chamarAPI(
+      {
+        acao: "quantidade",
+        chave: CHAVE,
+        separador: separador
+      },
+
+      function(resposta) {
+
+        if (
+          resposta &&
+          resposta.sucesso === true
+        ) {
+
+          quantidadeHoje.textContent =
+            resposta.quantidade || 0;
+
+        }
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * REGISTRAR PEDIDO
+   * ============================================================
+   */
+
+  function registrarPedido() {
+
+    if (!conferenciaAtiva) {
+
+      mostrarStatus(
+        "Inicie a conferência primeiro.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    const pedido =
+      pedidoInput.value.trim();
+
+
+    const separador =
+      selectSeparador.value;
+
+
+    if (!pedido) {
+
+      mostrarStatus(
+        "Informe o número do pedido.",
+        "error"
+      );
+
+      pedidoInput.focus();
+
+      return;
+
+    }
+
+
+    if (!separador) {
+
+      mostrarStatus(
+        "Separador não informado.",
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    btnRegistrar.disabled = true;
+
+    pedidoInput.disabled = true;
+
+
+    mostrarStatus(
+      "Registrando pedido...",
+      "loading"
+    );
+
+
+    chamarAPI(
+      {
+        acao: "registrar",
+        chave: CHAVE,
+        pedido: pedido,
+        separador: separador
+      },
+
+      function(resposta) {
+
+        console.log(
+          "Resposta registro:",
+          resposta
+        );
+
+
+        if (
+          !resposta ||
+          resposta.sucesso !== true
+        ) {
+
+          mostrarStatus(
+            resposta &&
+            resposta.erro
+              ? resposta.erro
+              : "Erro ao registrar pedido.",
+            "error"
+          );
+
+          btnRegistrar.disabled = false;
+
+          pedidoInput.disabled = false;
+
+          pedidoInput.focus();
+
+          return;
+
+        }
+
+
+        ultimoPedido.textContent =
+          resposta.pedido;
+
+
+        quantidadeHoje.textContent =
+          Number(
+            quantidadeHoje.textContent || 0
+          ) + 1;
+
+
+        atualizarTurno();
+
+
+        pedidoInput.value = "";
+
+
+        mostrarStatus(
+          "Pedido " +
+          resposta.pedido +
+          " registrado com sucesso.",
+          "success"
+        );
+
+
+        btnRegistrar.disabled = false;
+
+        pedidoInput.disabled = false;
+
+        pedidoInput.focus();
+
+      }
+    );
+
+  }
+
+
+  /*
+   * ============================================================
+   * ENTER NO CAMPO DO PEDIDO
+   * ============================================================
+   */
+
+  pedidoInput.addEventListener(
+    "keydown",
+    function(event) {
+
+      if (
+        event.key === "Enter"
+      ) {
+
+        event.preventDefault();
+
+        registrarPedido();
+
+      }
+
+    }
+  );
+
+
+  /*
+   * ============================================================
+   * FINALIZAR
+   * ============================================================
+   */
+
+  function finalizarConferencia() {
+
+    conferenciaAtiva = false;
+
+
+    areaConferencia.classList.add(
+      "hidden"
+    );
+
+
+    pedidoInput.value = "";
+
+    pedidoInput.disabled = true;
+
+    btnRegistrar.disabled = true;
+
+
+    selectSeparador.disabled = false;
+
+    btnIniciar.disabled =
+      !selectSeparador.value;
+
+
+    mostrarStatus(
+      "Conferência finalizada.",
+      "success"
+    );
+
+
+    selectSeparador.focus();
+
+  }
+
+
+  /*
+   * ============================================================
+   * INICIALIZAÇÃO
+   * ============================================================
+   */
+
+  carregarSeparadores();
+
+
+  /*
+   * Atualiza o turno periodicamente.
+   */
+
+  setInterval(
+    atualizarTurno,
+    30000
+  );
+
+</script>
 
 </body>
 </html>
