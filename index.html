@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8">
 
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Controle Profissional</title>
 
   <style>
+
     * {
       box-sizing: border-box;
       margin: 0;
@@ -83,12 +81,9 @@
 
     label {
       display: block;
-
       font-size: 14px;
       font-weight: bold;
-
       color: #374151;
-
       margin-bottom: 8px;
     }
 
@@ -128,12 +123,6 @@
       font-weight: bold;
 
       cursor: pointer;
-
-      transition: 0.15s;
-    }
-
-    button:active {
-      transform: scale(0.98);
     }
 
     button:disabled {
@@ -154,10 +143,6 @@
       background: #fee2e2;
       color: #991b1b;
       margin-top: 18px;
-    }
-
-    .btn-finalizar:hover {
-      background: #fecaca;
     }
 
     .tela {
@@ -307,6 +292,7 @@
     }
 
     @media (max-width: 420px) {
+
       body {
         padding: 12px;
       }
@@ -318,9 +304,13 @@
       h1 {
         font-size: 22px;
       }
+
     }
+
   </style>
+
 </head>
+
 
 <body>
 
@@ -328,9 +318,8 @@
 
     <div class="card">
 
-      <!-- ============================= -->
+
       <!-- TELA INICIAL -->
-      <!-- ============================= -->
 
       <section
         id="telaInicial"
@@ -349,6 +338,7 @@
           Controle de conferência
         </p>
 
+
         <div class="campo">
 
           <label for="separador">
@@ -365,6 +355,7 @@
 
         </div>
 
+
         <button
           id="btnIniciar"
           class="btn-principal"
@@ -372,6 +363,7 @@
         >
           Iniciar conferência
         </button>
+
 
         <div
           id="statusInicial"
@@ -381,9 +373,8 @@
       </section>
 
 
-      <!-- ============================= -->
+
       <!-- TELA DE CONFERÊNCIA -->
-      <!-- ============================= -->
 
       <section
         id="telaConferencia"
@@ -397,6 +388,7 @@
         <h1>
           Conferência
         </h1>
+
 
         <div class="separador-atual">
 
@@ -516,76 +508,89 @@
 
   <script>
 
-    /* ============================================
-       CONFIGURAÇÃO DA API
-       ============================================ */
+
+    /* ==========================================
+       CONFIGURAÇÃO
+       ========================================== */
+
 
     const URL_API =
-      'https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec';
+      "https://script.google.com/macros/s/AKfycbxfauuaqd7saDP7Brp3T7ES4R-ZQA7rR1dmzjFc6Xz6ynBIjaB_D1hsuQolmJ92jQINSw/exec";
+
 
     const CHAVE_APP =
-      'KING-CONFERENCIA-2026';
+      "KING-CONFERENCIA-2026";
 
 
-    /* ============================================
+    /* ==========================================
        ELEMENTOS
-       ============================================ */
+       ========================================== */
+
 
     const telaInicial =
-      document.getElementById('telaInicial');
+      document.getElementById("telaInicial");
+
 
     const telaConferencia =
-      document.getElementById('telaConferencia');
+      document.getElementById("telaConferencia");
+
 
     const separador =
-      document.getElementById('separador');
+      document.getElementById("separador");
+
 
     const pedido =
-      document.getElementById('pedido');
+      document.getElementById("pedido");
+
 
     const btnIniciar =
-      document.getElementById('btnIniciar');
+      document.getElementById("btnIniciar");
+
 
     const btnRegistrar =
-      document.getElementById('btnRegistrar');
+      document.getElementById("btnRegistrar");
+
 
     const btnFinalizar =
-      document.getElementById('btnFinalizar');
+      document.getElementById("btnFinalizar");
+
 
     const statusInicial =
-      document.getElementById('statusInicial');
+      document.getElementById("statusInicial");
+
 
     const statusConferencia =
-      document.getElementById('statusConferencia');
+      document.getElementById("statusConferencia");
+
 
     const contador =
-      document.getElementById('contador');
+      document.getElementById("contador");
+
 
     const ultimoPedido =
-      document.getElementById('ultimoPedido');
+      document.getElementById("ultimoPedido");
+
 
     const separadorAtual =
-      document.getElementById('separadorAtual');
+      document.getElementById("separadorAtual");
+
 
     const turnoAtual =
-      document.getElementById('turnoAtual');
+      document.getElementById("turnoAtual");
 
 
-    /* ============================================
-       VARIÁVEIS
-       ============================================ */
-
-    let separadorSelecionado = '';
+    let separadorSelecionado = "";
 
     let enviando = false;
 
 
-    /* ============================================
-       INÍCIO
-       ============================================ */
+    /* ==========================================
+       INICIAR
+       ========================================== */
+
 
     document.addEventListener(
-      'DOMContentLoaded',
+      "DOMContentLoaded",
       function () {
 
         carregarSeparadores();
@@ -594,141 +599,159 @@
     );
 
 
-    /* ============================================
+    /* ==========================================
        CARREGAR SEPARADORES
-       ============================================ */
+       ========================================== */
+
 
     function carregarSeparadores() {
 
       mostrarStatus(
         statusInicial,
-        'Carregando separadores...',
-        'carregando'
+        "Carregando separadores...",
+        "carregando"
       );
 
 
       const callback =
-        criarCallback(
-          function (resposta) {
-
-            if (
-              !resposta ||
-              resposta.sucesso !== true
-            ) {
-
-              separador.innerHTML =
-                '<option value="">Erro ao carregar</option>';
-
-              mostrarStatus(
-                statusInicial,
-                resposta && resposta.erro
-                  ? resposta.erro
-                  : 'Não foi possível carregar os separadores.',
-                'erro'
-              );
-
-              return;
-            }
+        "jsonpSeparadores_" +
+        Date.now();
 
 
-            const lista =
-              Array.isArray(
-                resposta.separadores
-              )
-                ? resposta.separadores
-                : [];
+      window[callback] =
+        function (resposta) {
+
+          console.log(
+            "Resposta separadores:",
+            resposta
+          );
 
 
-            separador.innerHTML = '';
-
-
-            if (lista.length === 0) {
-
-              const option =
-                document.createElement('option');
-
-              option.value = '';
-
-              option.textContent =
-                'Nenhum separador cadastrado';
-
-              separador.appendChild(option);
-
-
-              mostrarStatus(
-                statusInicial,
-                'Nenhum separador encontrado no Cadastro.',
-                'erro'
-              );
-
-              return;
-            }
-
-
-            const primeiraOpcao =
-              document.createElement('option');
-
-            primeiraOpcao.value = '';
-
-            primeiraOpcao.textContent =
-              'Selecione o separador';
-
-            separador.appendChild(
-              primeiraOpcao
-            );
-
-
-            lista.forEach(
-              function (nome) {
-
-                const option =
-                  document.createElement('option');
-
-                option.value = nome;
-
-                option.textContent = nome;
-
-                separador.appendChild(
-                  option
-                );
-
-              }
-            );
-
+          if (
+            !resposta ||
+            resposta.sucesso !== true
+          ) {
 
             mostrarStatus(
               statusInicial,
-              '',
-              ''
+              resposta && resposta.erro
+                ? resposta.erro
+                : "Erro ao carregar separadores.",
+              "erro"
+            );
+
+            separador.innerHTML =
+              '<option value="">Erro ao carregar</option>';
+
+            limparCallback(callback);
+
+            return;
+          }
+
+
+          const lista =
+            Array.isArray(
+              resposta.separadores
+            )
+              ? resposta.separadores
+              : [];
+
+
+          separador.innerHTML = "";
+
+
+          const opcaoInicial =
+            document.createElement("option");
+
+
+          opcaoInicial.value = "";
+
+          opcaoInicial.textContent =
+            "Selecione o separador";
+
+
+          separador.appendChild(
+            opcaoInicial
+          );
+
+
+          lista.forEach(
+            function (nome) {
+
+              const opcao =
+                document.createElement("option");
+
+
+              opcao.value =
+                nome;
+
+
+              opcao.textContent =
+                nome;
+
+
+              separador.appendChild(
+                opcao
+              );
+
+            }
+          );
+
+
+          if (lista.length === 0) {
+
+            mostrarStatus(
+              statusInicial,
+              "Nenhum separador cadastrado.",
+              "erro"
             );
 
           }
-        );
+          else {
+
+            mostrarStatus(
+              statusInicial,
+              "",
+              ""
+            );
+
+          }
+
+
+          limparCallback(callback);
+
+        };
 
 
       const url =
         URL_API +
-        '?acao=separadores' +
-        '&chave=' +
-        encodeURIComponent(CHAVE_APP) +
-        '&callback=' +
-        encodeURIComponent(callback);
+        "?acao=separadores" +
+        "&chave=" +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        "&callback=" +
+        callback;
 
 
-      carregarJSONP(
-        url,
-        callback
+      console.log(
+        "Chamando API:",
+        url
       );
+
+
+      adicionarScript(url);
 
     }
 
 
-    /* ============================================
+    /* ==========================================
        INICIAR CONFERÊNCIA
-       ============================================ */
+       ========================================== */
+
 
     btnIniciar.addEventListener(
-      'click',
+      "click",
       function () {
 
         const nome =
@@ -739,8 +762,8 @@
 
           mostrarStatus(
             statusInicial,
-            'Selecione um separador para continuar.',
-            'erro'
+            "Selecione um separador para continuar.",
+            "erro"
           );
 
           separador.focus();
@@ -754,16 +777,16 @@
 
 
         separadorAtual.textContent =
-          separadorSelecionado;
+          nome;
 
 
         telaInicial.classList.remove(
-          'ativa'
+          "ativa"
         );
 
 
         telaConferencia.classList.add(
-          'ativa'
+          "ativa"
         );
 
 
@@ -779,29 +802,30 @@
             pedido.focus();
 
           },
-          150
+          100
         );
 
       }
     );
 
 
-    /* ============================================
+    /* ==========================================
        REGISTRAR PEDIDO
-       ============================================ */
+       ========================================== */
+
 
     btnRegistrar.addEventListener(
-      'click',
+      "click",
       registrarPedido
     );
 
 
     pedido.addEventListener(
-      'keydown',
+      "keydown",
       function (event) {
 
         if (
-          event.key === 'Enter'
+          event.key === "Enter"
         ) {
 
           event.preventDefault();
@@ -829,8 +853,8 @@
 
         mostrarStatus(
           statusConferencia,
-          'Informe ou bipe o número do pedido.',
-          'erro'
+          "Informe ou bipe o número do pedido.",
+          "erro"
         );
 
         pedido.focus();
@@ -843,11 +867,9 @@
 
         mostrarStatus(
           statusConferencia,
-          'Nenhum separador selecionado.',
-          'erro'
+          "Nenhum separador selecionado.",
+          "erro"
         );
-
-        voltarParaInicio();
 
         return;
       }
@@ -855,111 +877,133 @@
 
       enviando = true;
 
+
       btnRegistrar.disabled = true;
 
+
       btnRegistrar.textContent =
-        'Registrando...';
+        "Registrando...";
 
 
       mostrarStatus(
         statusConferencia,
-        'Registrando pedido...',
-        'carregando'
+        "Registrando pedido...",
+        "carregando"
       );
 
 
       const callback =
-        criarCallback(
-          function (resposta) {
-
-            enviando = false;
-
-            btnRegistrar.disabled = false;
-
-            btnRegistrar.textContent =
-              'Registrar pedido';
+        "jsonpRegistrar_" +
+        Date.now();
 
 
-            if (
-              !resposta ||
-              resposta.sucesso !== true
-            ) {
+      window[callback] =
+        function (resposta) {
 
-              mostrarStatus(
-                statusConferencia,
-                resposta && resposta.erro
-                  ? resposta.erro
-                  : 'Não foi possível registrar o pedido.',
-                'erro'
-              );
-
-              pedido.focus();
-
-              return;
-            }
+          console.log(
+            "Resposta registrar:",
+            resposta
+          );
 
 
-            ultimoPedido.textContent =
-              resposta.pedido ||
-              numeroPedido;
+          enviando = false;
 
 
-            pedido.value = '';
+          btnRegistrar.disabled = false;
 
+
+          btnRegistrar.textContent =
+            "Registrar pedido";
+
+
+          if (
+            !resposta ||
+            resposta.sucesso !== true
+          ) {
 
             mostrarStatus(
               statusConferencia,
-              'Pedido registrado com sucesso.',
-              'sucesso'
+              resposta && resposta.erro
+                ? resposta.erro
+                : "Erro ao registrar pedido.",
+              "erro"
             );
 
 
-            if (resposta.turno) {
-
-              turnoAtual.textContent =
-                resposta.turno;
-
-            }
-            else {
-
-              atualizarTurnoVisual();
-
-            }
-
-
-            carregarQuantidade();
+            limparCallback(callback);
 
 
             pedido.focus();
 
+            return;
           }
-        );
+
+
+          ultimoPedido.textContent =
+            resposta.pedido ||
+            numeroPedido;
+
+
+          pedido.value = "";
+
+
+          turnoAtual.textContent =
+            resposta.turno ||
+            "-";
+
+
+          mostrarStatus(
+            statusConferencia,
+            "Pedido registrado com sucesso.",
+            "sucesso"
+          );
+
+
+          carregarQuantidade();
+
+
+          limparCallback(callback);
+
+
+          pedido.focus();
+
+        };
 
 
       const url =
         URL_API +
-        '?acao=registrar' +
-        '&chave=' +
-        encodeURIComponent(CHAVE_APP) +
-        '&pedido=' +
-        encodeURIComponent(numeroPedido) +
-        '&separador=' +
-        encodeURIComponent(separadorSelecionado) +
-        '&callback=' +
-        encodeURIComponent(callback);
+        "?acao=registrar" +
+        "&chave=" +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        "&pedido=" +
+        encodeURIComponent(
+          numeroPedido
+        ) +
+        "&separador=" +
+        encodeURIComponent(
+          separadorSelecionado
+        ) +
+        "&callback=" +
+        callback;
 
 
-      carregarJSONP(
-        url,
-        callback
+      console.log(
+        "Registrando:",
+        url
       );
+
+
+      adicionarScript(url);
 
     }
 
 
-    /* ============================================
-       QUANTIDADE DE PEDIDOS
-       ============================================ */
+    /* ==========================================
+       QUANTIDADE
+       ========================================== */
+
 
     function carregarQuantidade() {
 
@@ -969,45 +1013,59 @@
 
 
       const callback =
-        criarCallback(
-          function (resposta) {
+        "jsonpQuantidade_" +
+        Date.now();
 
-            if (
-              resposta &&
-              resposta.sucesso === true
-            ) {
 
-              contador.textContent =
-                resposta.quantidade || 0;
+      window[callback] =
+        function (resposta) {
 
-            }
+          console.log(
+            "Resposta quantidade:",
+            resposta
+          );
+
+
+          if (
+            resposta &&
+            resposta.sucesso === true
+          ) {
+
+            contador.textContent =
+              resposta.quantidade || 0;
 
           }
-        );
+
+
+          limparCallback(callback);
+
+        };
 
 
       const url =
         URL_API +
-        '?acao=quantidade' +
-        '&chave=' +
-        encodeURIComponent(CHAVE_APP) +
-        '&separador=' +
-        encodeURIComponent(separadorSelecionado) +
-        '&callback=' +
-        encodeURIComponent(callback);
+        "?acao=quantidade" +
+        "&chave=" +
+        encodeURIComponent(
+          CHAVE_APP
+        ) +
+        "&separador=" +
+        encodeURIComponent(
+          separadorSelecionado
+        ) +
+        "&callback=" +
+        callback;
 
 
-      carregarJSONP(
-        url,
-        callback
-      );
+      adicionarScript(url);
 
     }
 
 
-    /* ============================================
+    /* ==========================================
        TURNO
-       ============================================ */
+       ========================================== */
+
 
     function atualizarTurnoVisual() {
 
@@ -1030,28 +1088,29 @@
 
       turnoAtual.textContent =
         minutos <= 720
-          ? 'Manhã'
-          : 'Tarde';
+          ? "Manhã"
+          : "Tarde";
 
     }
 
 
-    /* ============================================
+    /* ==========================================
        FINALIZAR
-       ============================================ */
+       ========================================== */
+
 
     btnFinalizar.addEventListener(
-      'click',
+      "click",
       function () {
 
-        const confirmar =
-          window.confirm(
-            'Deseja finalizar esta conferência?'
-          );
+        if (
+          !window.confirm(
+            "Deseja finalizar esta conferência?"
+          )
+        ) {
 
-
-        if (!confirmar) {
           return;
+
         }
 
 
@@ -1063,38 +1122,38 @@
 
     function voltarParaInicio() {
 
-      separadorSelecionado = '';
+      separadorSelecionado = "";
 
-      pedido.value = '';
+      pedido.value = "";
 
-      contador.textContent = '0';
+      contador.textContent = "0";
 
       ultimoPedido.textContent =
-        'Nenhum ainda';
+        "Nenhum ainda";
 
-      turnoAtual.textContent = '-';
+      turnoAtual.textContent = "-";
 
-      separadorAtual.textContent = '-';
+      separadorAtual.textContent = "-";
 
 
       mostrarStatus(
         statusConferencia,
-        '',
-        ''
+        "",
+        ""
       );
 
 
       telaConferencia.classList.remove(
-        'ativa'
+        "ativa"
       );
 
 
       telaInicial.classList.add(
-        'ativa'
+        "ativa"
       );
 
 
-      separador.value = '';
+      separador.value = "";
 
 
       setTimeout(
@@ -1109,9 +1168,10 @@
     }
 
 
-    /* ============================================
+    /* ==========================================
        STATUS
-       ============================================ */
+       ========================================== */
+
 
     function mostrarStatus(
       elemento,
@@ -1120,11 +1180,11 @@
     ) {
 
       elemento.textContent =
-        mensagem || '';
+        mensagem || "";
 
 
       elemento.className =
-        'status';
+        "status";
 
 
       if (tipo) {
@@ -1138,63 +1198,15 @@
     }
 
 
-    /* ============================================
-       CRIAR CALLBACK JSONP
-       ============================================ */
-
-    function criarCallback(funcao) {
-
-      const nome =
-        'callback_' +
-        Date.now() +
-        '_' +
-        Math.floor(
-          Math.random() * 100000
-        );
+    /* ==========================================
+       JSONP
+       ========================================== */
 
 
-      window[nome] =
-        function (dados) {
-
-          try {
-
-            funcao(dados);
-
-          }
-          finally {
-
-            try {
-
-              delete window[nome];
-
-            }
-            catch (erro) {
-
-              window[nome] = undefined;
-
-            }
-
-          }
-
-        };
-
-
-      return nome;
-
-    }
-
-
-    /* ============================================
-       FAZER REQUISIÇÃO JSONP
-       ============================================ */
-
-    function carregarJSONP(
-      url,
-      callback
-    ) {
+    function adicionarScript(url) {
 
       const script =
-        document.createElement('script');
+        document.createElement("script");
 
 
       script.src = url;
@@ -1202,77 +1214,13 @@
       script.async = true;
 
 
-      let finalizado = false;
-
-
-      const timeout =
-        setTimeout(
-          function () {
-
-            if (finalizado) {
-              return;
-            }
-
-
-            finalizado = true;
-
-
-            script.remove();
-
-
-            if (
-              typeof window[callback] ===
-              'function'
-            ) {
-
-              window[callback]({
-
-                sucesso: false,
-
-                erro:
-                  'Tempo limite excedido ao comunicar com o servidor.'
-
-              });
-
-            }
-
-          },
-          15000
-        );
-
-
       script.onerror =
         function () {
 
-          if (finalizado) {
-            return;
-          }
-
-
-          finalizado = true;
-
-
-          clearTimeout(timeout);
-
-
-          script.remove();
-
-
-          if (
-            typeof window[callback] ===
-            'function'
-          ) {
-
-            window[callback]({
-
-              sucesso: false,
-
-              erro:
-                'Erro de comunicação com o servidor.'
-
-            });
-
-          }
+          console.error(
+            "Erro ao carregar:",
+            url
+          );
 
         };
 
@@ -1280,6 +1228,22 @@
       document.body.appendChild(
         script
       );
+
+    }
+
+
+    function limparCallback(nome) {
+
+      try {
+
+        delete window[nome];
+
+      }
+      catch (erro) {
+
+        window[nome] = undefined;
+
+      }
 
     }
 
